@@ -36,7 +36,7 @@ export default function UpcomingPanels({ panels, onSelectPanel }) {
             </label>
             <div className="relative">
               <select
-                className="h-8 appearance-none rounded-xs border border-violet-500 border-b-2 bg-violet-tint-14 pl-3 pr-8 font-pixel text-[11px] tracking-[1.8px] text-violet-200 outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+                className="h-8 appearance-none rounded-xs border border-violet-500 border-b-2 bg-violet-tint-14 pl-3 pr-8 font-pixel text-[11px] tracking-[1.8px] text-violet-200 outline-none transition-[background-color,border-color,color] duration-150 hover:border-violet-200 hover:bg-violet-200/10 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-bg-100 disabled:pointer-events-none disabled:border-line-subtle disabled:bg-bg-200 disabled:text-ink-muted disabled:opacity-40"
                 id="topic-filter"
                 onChange={(event) => setTopic(event.target.value)}
                 value={topic}
@@ -49,12 +49,12 @@ export default function UpcomingPanels({ panels, onSelectPanel }) {
               </select>
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute right-3 top-[7px] h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-violet-200"
+                className="pointer-events-none absolute right-3 top-[13px] h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-violet-200"
               />
             </div>
           </div>
           <label
-            className="flex h-10 min-w-[220px] flex-1 items-center gap-2.5 rounded-xs border border-violet-800 bg-bg-000 px-3 focus-within:ring-2 focus-within:ring-violet-500 sm:max-w-[320px]"
+            className="flex h-10 min-w-[220px] flex-1 items-center gap-2.5 rounded-xs border border-violet-800 bg-bg-000 px-3 transition-colors duration-150 hover:border-violet-500 focus-within:ring-2 focus-within:ring-white focus-within:ring-offset-2 focus-within:ring-offset-bg-100 sm:max-w-[320px]"
             htmlFor="panel-search"
           >
             <img

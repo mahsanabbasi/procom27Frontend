@@ -2,6 +2,7 @@ import arrowIcon from "../assets/panel-primary-arrow.svg";
 import leadIcon from "../assets/panel-primary-icon.svg";
 import heroScanlines from "../assets/panel-hero-scanlines.svg";
 import { panels } from "../data/panels.js";
+import { PrimaryButton, SecondaryButton } from "./ActionButtons.jsx";
 import { CardAction } from "./PanelPrimitives.jsx";
 
 function Stat({ value, label }) {
@@ -65,44 +66,17 @@ export default function PanelHero({ onViewPanels, onSelectPanel }) {
               schedule and bring your questions.
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <button
-                className="relative flex h-[52px] items-center justify-center gap-3 rounded-xs bg-violet-500 px-5 font-pixel text-[11px] tracking-[1.98px] text-bg-000 shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.18),inset_0px_1px_0px_0px_rgba(255,255,255,0.35)] sm:px-7 sm:text-[14px] sm:tracking-[2.52px]"
+              <PrimaryButton
+                arrowSrc={arrowIcon}
+                iconSrc={leadIcon}
+                label="VIEW SCHEDULE"
                 onClick={onViewPanels}
-                type="button"
-              >
-                <img
-                  alt=""
-                  aria-hidden="true"
-                  className="h-3 w-3"
-                  height="12"
-                  src={leadIcon}
-                  width="12"
-                />
-                VIEW SCHEDULE
-                <img
-                  alt=""
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                  height="16"
-                  src={arrowIcon}
-                  width="16"
-                />
-              </button>
-              <button
-                className="flex h-[52px] items-center gap-3 rounded-xs border border-violet-800 px-5 font-pixel text-[11px] tracking-[1.98px] text-ink hover:border-violet-500 sm:px-7 sm:text-[14px] sm:tracking-[2.52px]"
+              />
+              <SecondaryButton
+                arrowSrc={arrowIcon}
+                label="ALL PANELS"
                 onClick={onViewPanels}
-                type="button"
-              >
-                ALL PANELS
-                <img
-                  alt=""
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                  height="16"
-                  src={arrowIcon}
-                  width="16"
-                />
-              </button>
+              />
             </div>
             <div className="flex flex-wrap gap-8 pt-2 sm:gap-12">
               <Stat value="04" label="PANELS" />

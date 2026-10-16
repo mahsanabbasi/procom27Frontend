@@ -2,6 +2,7 @@ import registerArrow from "../assets/panel-action-arrow.svg";
 import registerIcon from "../assets/panel-lead-icon.svg";
 import linkArrow from "../assets/panel-detail-arrow.svg";
 import { speakers } from "../data/panels.js";
+import { RegisterButton } from "./ActionButtons.jsx";
 import {
   InfoRow,
   LeadMarker,
@@ -28,34 +29,6 @@ function Speaker({ speaker }) {
         <p className="text-[13px] leading-5 text-ink-muted">{speaker.role}</p>
       </div>
     </div>
-  );
-}
-
-function RegisterButton({ isSaved, onClick }) {
-  return (
-    <button
-      className="flex h-12 w-full items-center justify-center gap-3 rounded-xs border-[1.5px] border-violet-500 bg-violet-tint-14 px-4 font-pixel text-[11px] tracking-[1.98px] text-ink hover:bg-violet-tint-14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 sm:text-[14px] sm:tracking-[2.52px]"
-      onClick={onClick}
-      type="button"
-    >
-      <img
-        alt=""
-        aria-hidden="true"
-        className="h-3 w-3"
-        height="12"
-        src={registerIcon}
-        width="12"
-      />
-      {isSaved ? "ADDED TO SCHEDULE" : "ADD TO SCHEDULE"}
-      <img
-        alt=""
-        aria-hidden="true"
-        className="h-4 w-4"
-        height="16"
-        src={registerArrow}
-        width="16"
-      />
-    </button>
   );
 }
 
@@ -128,12 +101,20 @@ export default function PanelDetail({
             <InfoRow label="VENUE" value={panel.venue} />
             <InfoRow label="TOPIC" value={panel.detailTopic} />
             <InfoRow label="FORMAT" value={panel.format} />
-            <RegisterButton isSaved={isSaved} onClick={onToggleSaved} />
+            <RegisterButton
+              arrowSrc={registerArrow}
+              className="w-full"
+              iconSrc={registerIcon}
+              label="ADD TO SCHEDULE"
+              onClick={onToggleSaved}
+              registered={isSaved}
+              registeredLabel="ADDED TO SCHEDULE"
+            />
             <p className="text-[12px] leading-4 text-ink-muted">
               Seats are first come, first served. Arrive 10 minutes early.
             </p>
             <button
-              className="flex items-center gap-2 border-b border-violet-500/45 pb-1 font-pixel text-[10px] font-bold tracking-[1.8px] text-violet-500 sm:text-[11px] sm:tracking-[1.98px]"
+              className="flex items-center gap-2 border-b border-violet-500/45 pb-1 font-pixel text-[10px] font-bold tracking-[1.8px] text-violet-500 transition-colors hover:border-violet-200 hover:text-violet-200 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-bg-000 sm:text-[11px] sm:tracking-[1.98px]"
               onClick={onViewSchedule}
               type="button"
             >

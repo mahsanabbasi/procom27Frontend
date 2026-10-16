@@ -28,20 +28,25 @@ export function PanelMedia({
   glyph,
   caption = "// PANEL IMAGE",
   variant = "card",
+  scanlinesSrc = scanlines,
 }) {
-  const isBanner = variant === "banner";
+  const variantClass = {
+    banner: "h-[300px] w-full",
+    card: "h-[150px] w-full sm:w-[200px]",
+    director: "h-[220px] w-full sm:h-[200px] sm:w-[200px]",
+    portrait: "h-[220px] w-full",
+    square: "h-[200px] w-[200px]",
+  }[variant];
 
   return (
     <div
-      className={`relative flex shrink-0 flex-col items-center justify-center gap-2 overflow-hidden rounded-sm border border-line-subtle bg-bg-100 ${
-        isBanner ? "h-[300px] w-full" : "h-[150px] w-full sm:w-[200px]"
-      }`}
+      className={`relative flex shrink-0 flex-col items-center justify-center gap-2 overflow-hidden rounded-sm border border-line-subtle bg-bg-100 ${variantClass}`}
     >
       <img
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute -left-px -top-px h-[797px] w-[1440px] max-w-none"
-        src={scanlines}
+        src={scanlinesSrc}
       />
       <span className="relative font-stat text-[20px] leading-7 text-violet-500">
         {glyph}
@@ -53,10 +58,16 @@ export function PanelMedia({
   );
 }
 
-export function CardAction({ onClick, children = "VIEW PANEL" }) {
+export function CardAction({
+  onClick,
+  children = "VIEW PANEL",
+  arrowSrc = panelArrow,
+  disabled = false,
+}) {
   return (
     <button
-      className="flex h-10 items-center justify-center gap-3 rounded-xs border border-violet-800 px-4 font-pixel text-[11px] tracking-[1.98px] text-violet-200 transition-colors hover:border-violet-500 hover:bg-violet-tint-14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+      className="group flex h-10 items-center justify-center gap-3 rounded-xs border border-violet-800 px-4 font-pixel text-[13px] tracking-[2.34px] text-violet-200 transition-[background-color,border-color,transform] duration-150 hover:border-violet-500 hover:bg-violet-tint-14 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-bg-000 disabled:pointer-events-none disabled:border-line-subtle disabled:bg-transparent disabled:text-ink-muted"
+      disabled={disabled}
       onClick={onClick}
       type="button"
     >
@@ -64,9 +75,9 @@ export function CardAction({ onClick, children = "VIEW PANEL" }) {
       <img
         alt=""
         aria-hidden="true"
-        className="h-4 w-4"
+        className="h-4 w-4 group-disabled:opacity-40"
         height="16"
-        src={panelArrow}
+        src={arrowSrc}
         width="16"
       />
     </button>
