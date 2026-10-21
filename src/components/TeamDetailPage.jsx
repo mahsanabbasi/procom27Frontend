@@ -16,12 +16,6 @@ function NotFound({ slug }) {
   );
 }
 
-const PEOPLE = [
-  { label: 'Director', value: UNKNOWN, unknown: true },
-  { label: 'Co-directors', value: UNKNOWN, unknown: true },
-  { label: 'Members', value: 'Selected through induction' },
-];
-
 export default function TeamDetailPage({ slug }) {
   const team = getTeamBySlug(slug);
   if (!team) return <NotFound slug={slug} />;
@@ -30,6 +24,12 @@ export default function TeamDetailPage({ slug }) {
   const whatItIs = isCompetition
     ? `The student team that runs ${team.name} at PROCOM’27.`
     : 'One of the teams that runs PROCOM’27.';
+  const people = team.members.length
+    ? team.members.map((person) => ({ label: person.designation, value: person.name }))
+    : [
+      { label: 'Director', value: UNKNOWN, unknown: true },
+      { label: 'Deputy Directors', value: UNKNOWN, unknown: true },
+    ];
 
   return (
     <>
@@ -58,13 +58,14 @@ export default function TeamDetailPage({ slug }) {
       <section className="shell section" aria-labelledby="team-people-title">
         <h2 id="team-people-title" className="heading" data-reveal>The team</h2>
         <dl className="people" style={{ marginTop: '32px' }}>
-          {PEOPLE.map((person, index) => (
-            <div key={person.label} data-reveal style={{ '--i': index }}>
+          {people.map((person, index) => (
+            <div key={`${person.label}-${person.value}`} data-reveal style={{ '--i': index }}>
               <dt>{person.label}</dt>
               <dd className={person.unknown ? 'is-unknown' : undefined}>{person.value}</dd>
             </div>
           ))}
         </dl>
+        <p className="muted small" style={{ marginTop: '24px' }} data-reveal>Additional members are selected through induction.</p>
       </section>
 
       <section id="team-apply" className="shell section section-end" aria-labelledby="team-apply-title">
@@ -74,8 +75,8 @@ export default function TeamDetailPage({ slug }) {
           <div>
             <h2 id="team-apply-title" className="heading">Apply to join</h2>
             <p className="muted" style={{ marginTop: '16px', maxWidth: '44ch' }}>
-              One form covers every team and every position — positions are decided during
-              induction. Say you are applying to {team.name} and the directors will see it.
+              Apply to {team.name} through the shared membership form. New members are
+              selected during induction by the team’s leadership.
             </p>
           </div>
           <div>

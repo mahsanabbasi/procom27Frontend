@@ -1,4 +1,4 @@
-import { PENDING_REVEALS, isRevealed, revealValue } from '../data/reveals.js';
+import { isRevealed, revealValue } from '../data/reveals.js';
 import { COMPETITION_TEAMS, countWord } from '../data/teams.js';
 
 const FACTS = [
@@ -6,8 +6,6 @@ const FACTS = [
 ];
 
 export const AboutSection = () => {
-  const pending = PENDING_REVEALS.filter((item) => !isRevealed(item.key));
-
   return (
     <section id="about" className="shell section" aria-labelledby="about-title">
       <div className="about-grid">
@@ -32,7 +30,7 @@ export const AboutSection = () => {
             1 day on campus: competitions across {countWord(COMPETITION_TEAMS.length)} categories, a job fair,
             a startup showcase, food stalls and more.
           </p>
-
+          <a href="/about" className="pixel-btn-secondary" style={{ marginTop: '28px' }}>Our story →</a>
         </div>
       </div>
 

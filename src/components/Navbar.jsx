@@ -4,7 +4,7 @@ import { PROCOM_FORM_URL, EXTERNAL } from '../data/links.js';
 import { TEAMS_PATH } from '../data/teams.js';
 
 const LINKS = [
-  { label: 'About', href: '/#about' },
+  { label: 'About', href: '/about' },
   { label: 'Competitions', href: '/#competitions' },
   { label: 'Teams', href: TEAMS_PATH },
   { label: 'Intro Day', href: '/#schedule' },
@@ -13,7 +13,7 @@ const LINKS = [
 // There is no account system yet, so the bar carries one action: the form that
 // puts you on a team. Log in and the portal come back with the backend —
 // `AuthModal` / `PortalModal` are still in src/components/modals/.
-export const Navbar = () => {
+export const Navbar = ({ currentPath = window.location.pathname }) => {
   const markRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -22,6 +22,7 @@ export const Navbar = () => {
   }, []);
 
   const close = () => setOpen(false);
+  const isCurrent = (href) => !href.includes('#') && (currentPath.replace(/\/+$/, '') === href || (href === TEAMS_PATH && currentPath.startsWith(`${TEAMS_PATH}/`)));
 
   return (
     <header className="nav">
@@ -39,7 +40,7 @@ export const Navbar = () => {
 
         <nav className="nav-links" aria-label="Sections">
           {LINKS.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link">
+            <a key={link.href} href={link.href} className="nav-link" aria-current={isCurrent(link.href) ? 'page' : undefined}>
               {link.label}
             </a>
           ))}
@@ -63,7 +64,7 @@ export const Navbar = () => {
 
       <nav id="nav-panel" className="shell nav-panel" aria-label="Sections" hidden={!open}>
         {LINKS.map((link) => (
-          <a key={link.href} href={link.href} className="nav-link" onClick={close}>
+          <a key={link.href} href={link.href} className="nav-link" aria-current={isCurrent(link.href) ? 'page' : undefined} onClick={close}>
             {link.label}
           </a>
         ))}

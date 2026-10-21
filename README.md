@@ -1,4 +1,14 @@
-# React + Vite
+# PROCOM ’27 frontend
+
+The app serves the homepage at `/`, the About Us page at `/about`, and the team directory and team pages at `/teams` and `/teams/:slug`.
+
+Confirmed team names and designations live in `src/data/teamMembers.js`, mapped to the team slugs in `src/data/teams.js`. Homepage and directory cards show leadership previews; each team page shows its full confirmed roster. Both organiser sheets are recorded in the data file. Existing assignments are preserved, and the final ED Computing section is excluded. Content Creation has no supplied roster and retains pending leadership details.
+
+About Us uses the shared navigation, footer, contact dialog, and starfield from the homepage. Its content lives in `src/components/AboutPage.jsx`, with the history timeline in `src/components/AboutHistory.jsx` and milestone copy in `src/data/procomMilestones.js`. The homepage’s About link and “Our story” button open `/about`; the About page’s “Join competitions” button returns to `/#competitions`.
+
+Run `npm install` followed by `npm run dev` for a local preview. Run `npm run build` and `npm run lint` before pushing. Cloudflare’s existing SPA fallback in `worker.js` and `wrangler.toml` also serves direct `/about` and `/teams` links.
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 

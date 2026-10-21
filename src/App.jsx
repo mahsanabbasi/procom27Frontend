@@ -3,6 +3,7 @@ import { Starfield } from './components/Starfield.jsx';
 import { Navbar } from './components/Navbar.jsx';
 import { HeroSection } from './components/HeroSection.jsx';
 import { AboutSection } from './components/AboutSection.jsx';
+import AboutPage from './components/AboutPage.jsx';
 import { CompetitionCategoriesSection } from './components/CompetitionCategoriesSection.jsx';
 import { WhyProcomSection } from './components/WhyProcomSection.jsx';
 import { MeetTheTeamsSection } from './components/MeetTheTeamsSection.jsx';
@@ -61,13 +62,16 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  const isAboutPage = /^\/about\/?$/.test(currentPath);
   const isTeamsIndex = /^\/teams\/?$/.test(currentPath);
   const teamSlug = !isTeamsIndex && currentPath.startsWith('/teams/')
     ? decodeURIComponent(currentPath.slice('/teams/'.length).replace(/\/+$/, ''))
     : null;
 
   useEffect(() => {
-    if (isTeamsIndex) {
+    if (isAboutPage) {
+      document.title = "About Us | PROCOM'27";
+    } else if (isTeamsIndex) {
       document.title = "Teams | PROCOM'27";
     } else if (teamSlug) {
       const team = getTeamBySlug(teamSlug);
@@ -75,9 +79,18 @@ export default function App() {
     } else {
       document.title = "PROCOM'27 | FAST NUCES Karachi";
     }
-  }, [isTeamsIndex, teamSlug]);
+  }, [isAboutPage, isTeamsIndex, teamSlug]);
 
   useEntrances(currentPath);
+
+  // Direct links such as /#competitions arrive before React mounts the section.
+  useEffect(() => {
+    if (!window.location.hash) return undefined;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [currentPath]);
 
   const [contactOpen, setContactOpen] = useState(false);
 
@@ -85,11 +98,13 @@ export default function App() {
     <>
       <Starfield />
 
-      <div style={{ position: 'relative', zIndex: 1, minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
-        <Navbar />
+      <div id={isAboutPage || isTeamsIndex || teamSlug ? 'top' : undefined} style={{ position: 'relative', zIndex: 1, minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
+        <Navbar currentPath={currentPath} />
 
         <main style={{ flex: 1 }}>
-          {isTeamsIndex ? (
+          {isAboutPage ? (
+            <AboutPage />
+          ) : isTeamsIndex ? (
             <TeamsPage />
           ) : teamSlug ? (
             <TeamDetailPage slug={teamSlug} />

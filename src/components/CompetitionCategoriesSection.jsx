@@ -1,4 +1,5 @@
 import { Letterhead } from './Letterhead.jsx';
+import TeamLeadershipPreview from './TeamLeadershipPreview.jsx';
 import { COMPETITION_TEAMS, ALL_TEAMS, teamPath, TEAMS_PATH } from '../data/teams.js';
 
 // The wireframe's category grid: a letterhead, a name, one line, one way in.
@@ -20,6 +21,7 @@ export const CompetitionCategoriesSection = () => {
                 <h3>{team.name}</h3>
                 <p className="muted">{team.note}</p>
               </div>
+              <TeamLeadershipPreview team={team} />
               <span className="tile-action">View team →</span>
             </a>
           </li>

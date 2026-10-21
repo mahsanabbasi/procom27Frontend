@@ -1,12 +1,10 @@
 // PROCOM'27 team registry.
 //
-// The full list of teams, as given by the organisers. Nothing below the team
-// level is decided yet: which competitions each contest team will run, and the
-// positions inside every team, are settled through member induction. So a team
-// carries only what is known — its name, what it is for, and which part of the
-// event it belongs to. `note` is the one line a card shows; `???` means nobody
-// has told us yet and is printed as-is, like every other unannounced value.
+// Team descriptions and categories, with confirmed leadership from the roster.
+// Competition modules and additional members are settled through induction.
+// `note` is the one line a card shows; `???` is an unannounced value.
 // `icon` is the 12×12 pixel mark for what that team does (see PixelIcon.jsx).
+import { TEAM_MEMBERS } from './teamMembers.js';
 
 const teams = [
   {
@@ -108,6 +106,17 @@ const teams = [
     blurb: 'Runs an exploration and tech-testing platform for digital + physical mystery, with ciphers and cyber puzzles to crack',
   },
   {
+    slug: 'event-management',
+    group: 'events',
+    kind: 'support',
+    name: 'Event Management',
+    accent: '#4df3ff',
+    icon: 'clipboard',
+    note: 'Coordinates the event management teams.',
+    blurb:
+      'Connects the event management teams and their plans, from preparation to the closing ceremony.',
+  },
+  {
     slug: 'event-operations',
     group: 'events',
     kind: 'support',
@@ -141,6 +150,17 @@ const teams = [
       'The event management side of the tech fest: the floor, the stands, the schedule and everything that has to be in place before the doors open.',
   },
   {
+    slug: 'internal-affairs',
+    group: 'events',
+    kind: 'support',
+    name: 'Internal Affairs',
+    accent: '#ff4fd1',
+    icon: 'people',
+    note: 'Coordinates affairs within the organising team.',
+    blurb:
+      'Keeps the organising teams connected through internal communication and coordination.',
+  },
+  {
     slug: 'security',
     group: 'events',
     kind: 'support',
@@ -158,7 +178,9 @@ const teams = [
     name: 'Resources',
     accent: '#4df3ff',
     icon: 'crate',
-    note: '???',
+    note: 'Coordinates the materials teams need.',
+    blurb:
+      'Organises the shared resources and supplies the teams need to run the event.',
   },
   {
     slug: 'food',
@@ -170,6 +192,17 @@ const teams = [
     note: 'Feeds everyone across the three days.',
     blurb:
       'Catering, stalls and refreshments for participants, guests and the teams working the event.',
+  },
+  {
+    slug: 'food-fest',
+    group: 'events',
+    kind: 'support',
+    name: 'Food Fest',
+    accent: '#4df3ff',
+    icon: 'cup',
+    note: 'Brings the food festival together.',
+    blurb:
+      'Organises the food festival, bringing its stalls and on-campus experience together.',
   },
   {
     slug: 'logistics',
@@ -197,12 +230,23 @@ const teams = [
     slug: 'finance-registration',
     group: 'events',
     kind: 'support',
-    name: 'Finance & Registration (PR)',
+    name: 'Finance & Registration',
     accent: '#ff4fd1',
     icon: 'coin',
     note: 'Handles the money and the sign-ups.',
     blurb:
       'Keeps the budget, the payments and the accounts for every team, and runs registration and the front desk.',
+  },
+  {
+    slug: 'external-affairs',
+    group: 'outreach',
+    kind: 'support',
+    name: 'External Affairs',
+    accent: '#4df3ff',
+    icon: 'building',
+    note: 'Coordinates relations beyond the organising team.',
+    blurb:
+      'Supports PROCOM’s connections and coordination with people and organisations beyond the organising team.',
   },
   {
     slug: 'marketing',
@@ -238,6 +282,17 @@ const teams = [
       'Brings in the companies that fund the event and the job fair, and looks after them from first call to the closing ceremony.',
   },
   {
+    slug: 'social-media',
+    group: 'creative',
+    kind: 'support',
+    name: 'Social Media',
+    accent: '#ff4fd1',
+    icon: 'megaphone',
+    note: 'Coordinates PROCOM’s social media presence.',
+    blurb:
+      'Brings PROCOM’s announcements, stories and updates to its social media channels.',
+  },
+  {
     slug: 'media',
     group: 'creative',
     kind: 'support',
@@ -252,7 +307,7 @@ const teams = [
     slug: 'photography',
     group: 'creative',
     kind: 'support',
-    name: 'In House Photography',
+    name: 'Coverage – Photography',
     accent: '#4df3ff',
     icon: 'camera',
     note: 'Photographs the event.',
@@ -263,12 +318,23 @@ const teams = [
     slug: 'videography',
     group: 'creative',
     kind: 'support',
-    name: 'In House Videography',
+    name: 'Coverage – Videography',
     accent: '#ff4fd1',
     icon: 'clapper',
     note: 'Films and edits the event.',
     blurb:
-      'Films and cuts the event: the recaps, the aftermovie and everything that moves.',
+      'Films the competitions, the people and the event floor as they happen.',
+  },
+  {
+    slug: 'cinematics',
+    group: 'creative',
+    kind: 'support',
+    name: 'Cinematics',
+    accent: '#b995e6',
+    icon: 'film',
+    note: 'Creates cinematic stories from the event.',
+    blurb:
+      'Turns PROCOM’s moments into cinematic pieces, recaps and stories on screen.',
   },
   {
     slug: 'branding',
@@ -318,10 +384,12 @@ const teams = [
     slug: 'creativity',
     group: 'creative',
     kind: 'support',
-    name: 'Creativity',
+    name: 'Creatives',
     accent: '#4df3ff',
     icon: 'bulb',
-    note: '???',
+    note: 'Develops creative ideas for PROCOM.',
+    blurb:
+      'Shapes creative concepts and experiences that bring PROCOM’s identity to life.',
   },
   {
     slug: 'ui-ux',
@@ -369,9 +437,9 @@ const teams = [
   },
 ];
 
-export const ALL_TEAMS = teams;
-export const COMPETITION_TEAMS = teams.filter((team) => team.kind === 'competition');
-export const SUPPORT_TEAMS = teams.filter((team) => team.kind === 'support');
+export const ALL_TEAMS = teams.map((team) => ({ ...team, members: TEAM_MEMBERS[team.slug] || [] }));
+export const COMPETITION_TEAMS = ALL_TEAMS.filter((team) => team.kind === 'competition');
+export const SUPPORT_TEAMS = ALL_TEAMS.filter((team) => team.kind === 'support');
 
 // Counts are written out in words wherever the copy reads as a sentence, so
 // adding a team never leaves a stale number behind.

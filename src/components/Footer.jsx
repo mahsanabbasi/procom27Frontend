@@ -3,7 +3,7 @@ import { drawPixelMark } from '../utils/pixelMark.js';
 import { COMPETITION_TEAMS, TEAM_GROUPS, teamPath, TEAMS_PATH } from '../data/teams.js';
 
 const PAGE_LINKS = [
-  { label: 'About', href: '/#about' },
+  { label: 'About', href: '/about' },
   { label: 'Competitions', href: '/#competitions' },
   { label: 'Why PROCOM', href: '/#why' },
   { label: 'All teams', href: TEAMS_PATH },

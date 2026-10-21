@@ -3,6 +3,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import WheelGesturesPlugin from 'embla-carousel-wheel-gestures';
 import { TeamBanner } from './Letterhead.jsx';
+import TeamLeadershipPreview from './TeamLeadershipPreview.jsx';
 import { SUPPORT_TEAMS, ALL_TEAMS, teamPath, TEAMS_PATH, countWord } from '../data/teams.js';
 
 // Pixels the row travels per frame on its own: about 36px a second on a 60Hz
@@ -19,6 +20,7 @@ function TeamCard({ team }) {
         <h3>{team.name}</h3>
         <p className="muted">{team.note}</p>
       </div>
+      <TeamLeadershipPreview team={team} />
       <span className="tile-action">View team →</span>
     </a>
   );

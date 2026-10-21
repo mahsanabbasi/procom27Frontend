@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TeamBanner } from './Letterhead.jsx';
+import TeamLeadershipPreview from './TeamLeadershipPreview.jsx';
 import { TEAM_GROUPS, teamsInGroup, teamPath, TEAMS_PATH, ALL_TEAMS, COMPETITION_TEAMS, SUPPORT_TEAMS, countWord } from '../data/teams.js';
 
 // Every team on one page, the way the wireframe lays out "Meet the Teams":
@@ -68,6 +69,7 @@ export default function TeamsPage() {
                   <h3>{team.name}</h3>
                   <p className="muted">{team.note}</p>
                 </div>
+                <TeamLeadershipPreview team={team} />
                 <span className="tile-action">View team →</span>
               </a>
             </li>
