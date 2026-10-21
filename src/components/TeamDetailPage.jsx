@@ -1,93 +1,90 @@
-import EventCard from "./EventCard.jsx";
-import { DirectorCard, PersonCard } from "./TeamCards.jsx";
-import TeamHero from "./TeamHero.jsx";
-import SiteFooter from "./SiteFooter.jsx";
-import { SectionHeading } from "./PanelPrimitives.jsx";
+import { TeamBanner } from './Letterhead.jsx';
+import { UNKNOWN } from '../data/reveals.js';
+import { PROCOM_FORM_URL, EXTERNAL } from '../data/links.js';
+import { getTeamBySlug } from '../data/teams.js';
 
-const coDirectors = [
-  "Problem setting",
-  "Datasets & judging",
-  "Outreach & sponsors",
-  "Event-day operations",
+function NotFound({ slug }) {
+  return (
+    <div className="shell notfound">
+      <h1 className="team-title">No team at “{slug}”</h1>
+      <p className="lead muted">Every PROCOM’27 team is listed on the home page.</p>
+      <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
+        <a href="/#competitions" className="text-link">Competition teams</a>
+        <a href="/#teams" className="text-link">Other teams</a>
+      </div>
+    </div>
+  );
+}
+
+const PEOPLE = [
+  { label: 'Director', value: UNKNOWN, unknown: true },
+  { label: 'Co-directors', value: UNKNOWN, unknown: true },
+  { label: 'Members', value: 'Selected through induction' },
 ];
 
-const events = [
-  {
-    title: "AI & Data Challenge",
-    meta: "Day 1 · 02:30 PM · Lab 2",
-    description:
-      "Build a model on a fresh dataset in four hours, then present your results.",
-  },
-  {
-    title: "Prompt Engineering Sprint",
-    meta: "Day 2 · 10:00 AM · Lab 1",
-    description:
-      "Solve practical tasks with LLMs. The fastest correct solutions win.",
-  },
-  {
-    title: "ML Model Showdown",
-    meta: "Day 3 · 11:00 AM · Lab 2",
-    description: "Bring a trained model and defend it in front of the judges.",
-  },
-];
+export default function TeamDetailPage({ slug }) {
+  const team = getTeamBySlug(slug);
+  if (!team) return <NotFound slug={slug} />;
 
-export default function TeamDetailPage() {
-  function showEvents() {
-    document.getElementById("team-events")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }
+  const isCompetition = team.kind === 'competition';
+  const whatItIs = isCompetition
+    ? `The student team that runs ${team.name} at PROCOM’27.`
+    : 'One of the teams that runs PROCOM’27.';
 
   return (
     <>
-      <main className="min-h-screen bg-bg-000 text-ink">
-        <TeamHero onViewEvents={showEvents} />
-        <section className="w-full px-6 pb-16 md:px-16" id="team-leadership">
-          <div className="mx-auto flex w-full max-w-300 flex-col items-start gap-8">
-            <SectionHeading
-              description="The director and co-directors who run the AI team. Reach out if you want to help with the next edition."
-              eyebrow="// TEAM LEADERSHIP"
-              title="MEET THE TEAM"
-            />
-            <DirectorCard />
-            <div className="flex w-full flex-col items-start gap-4">
-              <h3 className="font-pixel text-[14px] leading-5 tracking-[2.52px] text-ink sm:text-[16px] sm:tracking-[2.88px]">
-                CO-DIRECTORS
-              </h3>
-              <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {coDirectors.map((focus, index) => (
-                  <PersonCard focus={focus} key={`co-director-${index}`} />
-                ))}
-              </div>
+      <section className="shell team-hero" aria-labelledby="team-title">
+        <div className="team-head">
+          <div className="team-head-mark" data-load style={{ '--d': '160ms' }}>
+            <TeamBanner team={team} />
+          </div>
+
+          <div className="team-head-copy">
+            <h1 id="team-title" className="team-title" data-load style={{ '--d': '200ms' }}>
+              {team.name}
+            </h1>
+            <p className="lead" data-load style={{ '--d': '260ms' }}>{whatItIs}</p>
+            {team.blurb && (
+              <p className="body muted" data-load style={{ '--d': '300ms' }}>{team.blurb}</p>
+            )}
+            <div className="hero-actions" data-load style={{ '--d': '360ms' }}>
+              <a href={PROCOM_FORM_URL} {...EXTERNAL} className="pixel-btn-primary">Apply to join</a>
+              <a href="/teams" className="pixel-btn-secondary">All teams</a>
             </div>
           </div>
-        </section>
-        <section
-          className="w-full border-t border-line-subtle px-6 pb-20 pt-16 md:px-16"
-          id="team-events"
-        >
-          <div className="mx-auto flex w-full max-w-300 flex-col items-start gap-8">
-            <SectionHeading
-              description="Competitions the AI team runs at PROCOM’27."
-              eyebrow="// EVENTS"
-              title="EVENTS BY THIS TEAM"
-            />
-            <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-3">
-              {events.map((event) => (
-                <EventCard event={event} key={event.title} />
-              ))}
+        </div>
+      </section>
+
+      <section className="shell section" aria-labelledby="team-people-title">
+        <h2 id="team-people-title" className="heading" data-reveal>The team</h2>
+        <dl className="people" style={{ marginTop: '32px' }}>
+          {PEOPLE.map((person, index) => (
+            <div key={person.label} data-reveal style={{ '--i': index }}>
+              <dt>{person.label}</dt>
+              <dd className={person.unknown ? 'is-unknown' : undefined}>{person.value}</dd>
             </div>
-            <a
-              className="inline-flex items-center gap-2 border-b border-violet-500/45 pb-1 font-pixel text-[10px] font-bold tracking-[1.8px] text-violet-500 hover:text-violet-200 sm:text-[11px] sm:tracking-[1.98px]"
-              href="/#upcoming-panels"
-            >
-              VIEW ALL EVENTS
-              <span aria-hidden="true">→</span>
-            </a>
+          ))}
+        </dl>
+      </section>
+
+      <section id="team-apply" className="shell section section-end" aria-labelledby="team-apply-title">
+        {/* One `data-reveal` on the grid, not on each child: the two columns sit
+            on the same row, so revealing them separately showed half a row. */}
+        <div className="apply-grid" data-reveal>
+          <div>
+            <h2 id="team-apply-title" className="heading">Apply to join</h2>
+            <p className="muted" style={{ marginTop: '16px', maxWidth: '44ch' }}>
+              One form covers every team and every position — positions are decided during
+              induction. Say you are applying to {team.name} and the directors will see it.
+            </p>
           </div>
-        </section>
-      </main>
-      <SiteFooter />
+          <div>
+            <a href={PROCOM_FORM_URL} {...EXTERNAL} className="pixel-btn-primary">Open the application form</a>
+            <p className="muted small" style={{ marginTop: '16px' }}>
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
