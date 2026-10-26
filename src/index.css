@@ -495,7 +495,7 @@ a.tile:focus-visible, .tile-action-link:focus-visible { outline: 2px solid var(-
 
 .footer { background: var(--surface); color: var(--ink); padding-block: clamp(40px, 6vh, 72px) 28px; }
 .footer-grid { display: grid; grid-template-columns: 4fr 8fr; gap: 40px clamp(24px, 4vw, 64px); }
-.footer-brand { display: grid; gap: 16px; align-content: start; }
+.footer-brand { display: grid; gap: 16px; align-content: start; container: footer-brand / inline-size; }
 .footer-brand p { max-width: 36ch; font-size: var(--step-small); line-height: 1.6; }
 .footer-mark { display: flex; align-items: center; gap: 12px; font-family: var(--font-pixel); font-size: 14px; }
 .footer-mark canvas { display: block; width: 15px; height: auto; image-rendering: pixelated; }
@@ -510,6 +510,163 @@ a.tile:focus-visible, .tile-action-link:focus-visible { outline: 2px solid var(-
 @media (max-width: 820px) {
   .footer-grid { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Credits: a terminal key under the social links in the footer brand column
+   that opens onto the two teams behind the site. The panel is wider than
+   that column, so it is a band of its own under the footer grid. The pixel
+   face carries the names, the rosters read as ordinary copy. ----------- */
+
+.credits { margin-top: 6px; }
+
+.credits-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 20px;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--t-hover) ease, color var(--t-hover) ease, transform var(--t-press) var(--ease-out), box-shadow var(--t-hover) ease;
+  box-shadow: 4px 4px 0 rgba(185, 149, 230, 0.22);
+}
+.credits-toggle:hover { background: var(--accent); color: var(--accent-ink); box-shadow: 4px 4px 0 rgba(185, 149, 230, 0.45); }
+.credits-toggle:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(185, 149, 230, 0.45); }
+.credits-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.credits-toggle[aria-expanded='true'] { background: var(--accent); color: var(--accent-ink); box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55); }
+
+.credits-toggle-glyph {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  font-family: var(--font-text);
+  font-size: 20px;
+  line-height: 1;
+  transition: transform var(--t-hover) var(--ease-out), color var(--t-hover) ease;
+}
+.credits-toggle[aria-expanded='true'] .credits-toggle-glyph { transform: rotate(45deg); }
+.credits-toggle-note { font-family: var(--font-text); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--muted); white-space: nowrap; }
+.credits-toggle[aria-expanded='true'] .credits-toggle-note { color: rgba(13, 11, 18, 0.7); }
+.credits-toggle-caret { width: 8px; height: 14px; }
+.credits-toggle[aria-expanded='true'] .credits-toggle-caret { background: var(--accent-ink); }
+
+.credits-panel {
+  container: credits-panel / inline-size;
+  margin-top: clamp(26px, 4vh, 44px);
+  border-top: 2px solid var(--surface-2);
+  padding-top: 24px;
+  animation: credits-rise 320ms var(--ease-out);
+}
+.credits-panel[hidden] { display: none; }
+@keyframes credits-rise {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* The title bar of a window: name on the left, file on the right. */
+.credits-panel-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.credits-panel-title { text-transform: uppercase; }
+.credits-panel-dots { flex: 1; height: 2px; background: repeating-linear-gradient(90deg, rgba(13, 11, 18, 0.45) 0 6px, transparent 6px 12px); }
+.credits-panel-path { font-size: 10px; opacity: 0.75; }
+
+.credits-teams { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+
+.credits-team {
+  position: relative;
+  container: credits-team / inline-size;
+  padding: 20px 18px 22px;
+  background: var(--bg);
+  border: 1px solid color-mix(in srgb, var(--mark, var(--accent)) 42%, transparent);
+}
+/* The wireframe grid behind a block, as in the team banners. */
+.credits-team::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(238, 240, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 240, 248, 0.05) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+/* One lit corner, the way a pixel window marks where it opens. */
+.credits-team-corner {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid var(--mark, var(--accent));
+  border-right: 2px solid var(--mark, var(--accent));
+}
+.credits-team > *:not(.credits-team-corner) { position: relative; }
+
+.credits-team-head { display: flex; align-items: center; gap: 14px; }
+.credits-team-headings { display: grid; gap: 6px; min-width: 0; }
+.credits-team-name { font-family: var(--font-pixel); font-size: 15px; line-height: 1.6; color: #f4eeff; }
+.credits-team-count { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mark, var(--accent)); }
+.credits-team-note { margin-top: 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+
+/* The roster. The column count is the size of the team, so four names sit
+   across a wide screen, two on a tablet and one on a phone. */
+.credits-people {
+  display: grid;
+  grid-template-columns: repeat(var(--credits-count, 4), minmax(0, 1fr));
+  gap: 8px;
+  margin: 18px 0 0;
+}
+.credits-person { padding: 12px 12px 14px; background: var(--surface); border-left: 2px solid var(--mark, var(--accent)); }
+.credits-person dt { font-size: 11px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.credits-person dd { margin: 6px 0 0; font-size: 15px; font-weight: 500; line-height: 1.35; color: #f4eeff; overflow-wrap: anywhere; }
+
+.credits-team-link { display: inline-block; margin-top: 16px; font-size: 14px; }
+.credits-foot { margin-top: 16px; }
+
+@media (max-width: 980px) {
+  .credits-people { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .credits-teams { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .credits-people { grid-template-columns: 1fr; }
+  .credits-toggle { width: 100%; justify-content: space-between; gap: 10px; }
+  .credits-toggle-note { font-size: 12px; }
+  .credits-panel-path { display: none; }
+}
+
+/* The roster answers to the width of the block it sits in, not the width of
+   the window: four names across while there is room for them, two when the
+   block narrows, one on a phone. */
+@container credits-team (max-width: 560px) {
+  .credits-people { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container credits-team (max-width: 340px) {
+  .credits-people { grid-template-columns: 1fr; }
+}
+@container credits-panel (max-width: 760px) {
+  .credits-teams { grid-template-columns: 1fr; }
+}
+/* The key keeps its label and drops the hint when the brand column is narrow
+   enough that the two would not sit on one line. */
+@container footer-brand (max-width: 320px) {
+  .credits-toggle-note { display: none; }
 }
 
 /* All-teams page --------------------------------------------------------- */

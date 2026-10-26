@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { drawPixelMark } from '../utils/pixelMark.js';
 import { COMPETITION_TEAMS, TEAM_GROUPS, teamPath, TEAMS_PATH } from '../data/teams.js';
+import { CreditsPanel, CreditsToggle } from './FooterCredits.jsx';
 
 const PAGE_LINKS = [
   { label: 'About', href: '/about' },
@@ -28,10 +29,25 @@ function LinkColumn({ title, links }) {
 
 export const Footer = ({ onContactClick }) => {
   const markRef = useRef(null);
+  // The credits key lives in the brand column, the panel it opens is wider
+  // than that column, so the footer keeps the state that links the two.
+  const [creditsOpen, setCreditsOpen] = useState(false);
+  const creditsId = useId();
+  const creditsPanelRef = useRef(null);
 
   useEffect(() => {
     drawPixelMark(markRef.current, '#b995e6');
   }, []);
+
+  // The panel opens below the whole footer grid, so bring it into view.
+  useEffect(() => {
+    if (!creditsOpen) return undefined;
+    const frame = requestAnimationFrame(() => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      creditsPanelRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [creditsOpen]);
 
   return (
     <footer className="footer">
@@ -48,6 +64,12 @@ export const Footer = ({ onContactClick }) => {
               <a href="https://pk.linkedin.com/company/procom-fast" target="_blank" rel="noopener noreferrer" className="text-link">LinkedIn</a>
               <button type="button" onClick={onContactClick} className="text-link">Contact</button>
             </div>
+
+            <CreditsToggle
+              open={creditsOpen}
+              panelId={creditsId}
+              onToggle={() => setCreditsOpen((value) => !value)}
+            />
           </div>
 
           <div className="footer-cols">
@@ -64,6 +86,8 @@ export const Footer = ({ onContactClick }) => {
             />
           </div>
         </div>
+
+        <CreditsPanel id={creditsId} hidden={!creditsOpen} panelRef={creditsPanelRef} />
 
         <div className="footer-legal">
           <p className="muted">© 2026 PROCOM, FAST NUCES Karachi.</p>
