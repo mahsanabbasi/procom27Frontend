@@ -31,17 +31,15 @@ export const TEAM_MEMBERS = {
   ],
   programming: [
     { name: 'Huzaifa Ahmed Bari', designation: 'Director' },
-    { name: 'Syed Muhammad Muzammil', designation: 'Deputy Director' },
-    { name: 'Shaheer', designation: 'Deputy Director' },
     { name: 'Muhammad Musab Ali Khan', designation: 'Deputy Director' },
   ],
   cybersecurity: [
-    { name: 'Syed Muhammad Muzammil', designation: 'Head' },
-    { name: 'Shaheer', designation: 'Co-head' },
+    { name: 'Syed Muhammad Muzammil', designation: 'Director' },
+    { name: 'Shaheer', designation: 'Deputy Director' },
   ],
   'tech-quest': [
-    { name: 'Sana Munir Alam', designation: 'Head' },
-    { name: 'Adeena Asif', designation: 'Co-head' },
+    { name: 'Sana Munir Alam', designation: 'Director' },
+    { name: 'Adeena Asif', designation: 'Deputy Director' },
   ],
   development: [
     { name: 'Anas Furqan', designation: 'Director' },
@@ -60,10 +58,8 @@ export const TEAM_MEMBERS = {
     { name: 'Asadullah Ishfaque', designation: 'Deputy Director' },
   ],
   general: [
-    { name: 'Sana Munir Alam', designation: 'Director' },
     { name: 'Muhammad Zajnan Aslam', designation: 'Director' },
     { name: 'Syed Muhammad Burhan Farooq', designation: 'Deputy Director' },
-    { name: 'Adeena Asif', designation: 'Deputy Director' },
     { name: 'Roshni Vikram', designation: 'Deputy Director' },
   ],
   ee: [
