@@ -1,0 +1,31 @@
+.dino-initialization { position:fixed; inset:0; z-index:10000; overflow:hidden; background:var(--bg,#05060c); pointer-events:auto; }
+html:has(.dino-initialization) { overflow:hidden; }
+.site-initialization:has(.dino-initialization) .initialization-content { height:100svh; overflow:hidden; }
+.initialization-atmosphere { position:absolute; inset:0; }
+.initialization-mark { position:absolute; left:50%; top:50%; translate:-50% -50%; width:calc(22 * var(--mark-unit,5px)); height:calc(30 * var(--mark-unit,5px)); image-rendering:pixelated; filter:drop-shadow(0 0 22px rgba(185,149,230,.6)); }
+.initialization-dino { --dino-unit:3px; position:absolute; left:0; width:calc(40 * var(--dino-unit)); height:calc(43 * var(--dino-unit)); background-repeat:no-repeat; background-size:calc(80 * var(--dino-unit)) calc(43 * var(--dino-unit)); image-rendering:pixelated; animation:initialization-stride 166.666667ms steps(2,end) infinite; animation-play-state:paused; will-change:transform; }
+.dino-initialization[data-phase='run'] .initialization-dino { animation-play-state:running; }
+.dino-initialization[data-phase='collision'] .initialization-mark { filter:drop-shadow(0 0 22px rgba(185,149,230,.6)) brightness(1.18); }
+.initialization-impact { position:absolute; left:var(--hit-x); top:var(--hit-y); display:none; pointer-events:none; }
+.dino-initialization[data-phase='collision'] .initialization-impact,.dino-initialization[data-phase='glitch'] .initialization-impact { display:block; }
+.initialization-impact i { position:absolute; width:4px; height:4px; background:#c8b1de; --dx:20px; --dy:-8px; animation:initialization-fragment 300ms steps(4,end) both; }
+.initialization-impact i:nth-child(2) { --dx:-14px; --dy:12px; width:3px; }
+.initialization-impact i:nth-child(3) { --dx:8px; --dy:20px; }
+.initialization-impact i:nth-child(4) { --dx:25px; --dy:8px; width:6px; height:2px; }
+.initialization-impact i:nth-child(5) { --dx:0px; --dy:-19px; width:3px; height:3px; }
+.initialization-slices { position:absolute; inset:0; display:none; overflow:hidden; }
+.dino-initialization[data-phase='glitch'] { background:transparent; pointer-events:none; }
+.dino-initialization[data-phase='glitch'] .initialization-atmosphere,.dino-initialization[data-phase='glitch'] .initialization-dino,.dino-initialization[data-phase='glitch'] .initialization-mark { visibility:hidden; }
+.dino-initialization[data-phase='glitch'] .initialization-slices { display:block; }
+.initialization-slices i { position:absolute; left:0; right:0; top:var(--hit-y); height:8px; border-top:1px solid #c3a6d788; background:#8c69aa24; animation:initialization-signal 450ms steps(5,end) both; }
+.initialization-slices i:nth-child(2) { top:calc(var(--hit-y) + 46px); height:13px; animation-direction:reverse; }
+.initialization-slices i:nth-child(3) { top:calc(var(--hit-y) - 32px); height:3px; }
+.site-initialization[data-font-fallback='true'] { --font-pixel:ui-monospace,monospace; --font-text:system-ui,sans-serif; }
+.site-initialization[data-font-fallback='true'] .initialization-content { font-family:var(--font-text); }
+.initialization-demo-controls { position:fixed; right:16px; bottom:max(16px,env(safe-area-inset-bottom)); z-index:999; display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; max-width:calc(100% - 32px); }
+.initialization-demo-controls button { min-height:44px; padding:10px 14px; background:#0b0c17ed; border:1px solid #9b83b1; color:#eadfe9; font:10px ui-monospace,monospace; cursor:pointer; }
+@keyframes initialization-stride { to { background-position:calc(-80 * var(--dino-unit)) 0; } }
+@keyframes initialization-fragment { to { transform:translate(var(--dx),var(--dy)); opacity:0; } }
+@keyframes initialization-signal { 0% { transform:translateX(-8px) scaleX(.05); transform-origin:var(--hit-x) center; } 40% { transform:translateX(7px) scaleX(.55); } 80% { transform:translateX(-3px) scaleX(1); opacity:.8; } 100% { transform:translateX(0); opacity:0; } }
+@media(max-width:1023px) { .initialization-dino { --dino-unit:2px; } }
+@media(prefers-reduced-motion:reduce) { .dino-initialization *, .dino-initialization *::after { animation:none !important; } .initialization-dino,.initialization-impact,.initialization-slices { display:none !important; } }
