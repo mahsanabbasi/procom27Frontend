@@ -1,25 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { Router, Switch, Route, useLocation } from 'wouter';
 import { Starfield } from './components/Starfield.jsx';
 import { Navbar } from './components/Navbar.jsx';
 import { HeroSection } from './components/HeroSection.jsx';
 import { AboutSection } from './components/AboutSection.jsx';
-import AboutPage from './components/AboutPage.jsx';
 import { CompetitionCategoriesSection } from './components/CompetitionCategoriesSection.jsx';
 import { WhyProcomSection } from './components/WhyProcomSection.jsx';
 import { MeetTheTeamsSection } from './components/MeetTheTeamsSection.jsx';
 import { IntroScheduleSection } from './components/IntroScheduleSection.jsx';
 import { RegisterBand } from './components/RegisterBand.jsx';
 import { Footer } from './components/Footer.jsx';
-import TeamDetailPage from './components/TeamDetailPage.jsx';
-import TeamsPage from './components/TeamsPage.jsx';
-
-// Accounts are not built yet, so nothing opens AuthModal, PortalModal or
-// CompetitionsModal: every call to action goes to the membership form in
-// src/data/links.js. They stay in src/components/modals/ for when the backend
-// lands — mount them here again and give the navbar back its Log in button.
 import { ContactModal } from './components/modals/ContactModal.jsx';
-
+import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 import { getTeamBySlug } from './data/teams.js';
+
+const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
+const TeamsPage = lazy(() => import('./components/TeamsPage.jsx'));
+const TeamDetailPage = lazy(() => import('./components/TeamDetailPage.jsx'));
 
 // Sections arrive as they enter the viewport, once. Content is visible without
 // script: the hidden state only applies under html.js.
@@ -53,20 +50,82 @@ function useEntrances(key) {
   }, [key]);
 }
 
-export default function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+function RetroLoader() {
+  return (
+    <div
+      role="status"
+      aria-label="Loading"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '400px',
+        padding: '60px 16px',
+        gap: '20px',
+        width: '100%',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: '11px',
+          color: '#B995E6',
+          textShadow: '0 0 10px rgba(185, 149, 230, 0.6)',
+          letterSpacing: '1px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+        }}
+      >
+        <span>&gt;&gt;</span>
+        <span>LOADING...</span>
+        <span className="caret" />
+      </div>
+      <div
+        style={{
+          width: '200px',
+          height: '8px',
+          background: 'rgba(24, 26, 48, 0.8)',
+          border: '2px solid rgba(185, 149, 230, 0.4)',
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            height: '100%',
+            background: '#B995E6',
+            width: '60%',
+            animation: 'pulse 1.2s ease-in-out infinite',
+          }}
+        />
+      </div>
+    </div>
+  );
+}
 
-  useEffect(() => {
-    const handlePopState = () => setCurrentPath(window.location.pathname);
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+function HomePage() {
+  return (
+    <>
+      <HeroSection />
+      <AboutSection />
+      <WhyProcomSection />
+      <CompetitionCategoriesSection />
+      <MeetTheTeamsSection />
+      <IntroScheduleSection />
+      <RegisterBand />
+    </>
+  );
+}
 
-  const isAboutPage = /^\/about\/?$/.test(currentPath);
-  const isTeamsIndex = /^\/teams\/?$/.test(currentPath);
-  const teamSlug = !isTeamsIndex && currentPath.startsWith('/teams/')
-    ? decodeURIComponent(currentPath.slice('/teams/'.length).replace(/\/+$/, ''))
-    : null;
+function MainLayout() {
+  const [location] = useLocation();
+  const [contactOpen, setContactOpen] = useState(false);
+
+  const isAboutPage = location === '/about' || location === '/about/';
+  const isTeamsIndex = location === '/teams' || location === '/teams/';
+  const teamMatch = location.match(/^\/teams\/([^/]+)/);
+  const teamSlug = teamMatch ? decodeURIComponent(teamMatch[1]) : null;
 
   useEffect(() => {
     if (isAboutPage) {
@@ -81,44 +140,65 @@ export default function App() {
     }
   }, [isAboutPage, isTeamsIndex, teamSlug]);
 
-  useEntrances(currentPath);
+  useEntrances(location);
 
-  // Direct links such as /#competitions arrive before React mounts the section.
+  // Smooth hash scroll navigation across routes and same-page clicks
   useEffect(() => {
-    if (!window.location.hash) return undefined;
-    const frame = requestAnimationFrame(() => {
-      document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' });
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [currentPath]);
+    const scrollToTarget = () => {
+      if (window.location.hash) {
+        const id = window.location.hash.slice(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    };
 
-  const [contactOpen, setContactOpen] = useState(false);
+    const timer = setTimeout(scrollToTarget, 50);
+
+    const onHashChange = () => {
+      scrollToTarget();
+    };
+
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('hashchange', onHashChange);
+    };
+  }, [location]);
 
   return (
     <>
       <Starfield />
 
-      <div id={isAboutPage || isTeamsIndex || teamSlug ? 'top' : undefined} style={{ position: 'relative', zIndex: 1, minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
-        <Navbar currentPath={currentPath} />
+      <div
+        id={location !== '/' ? 'top' : undefined}
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          minHeight: '100svh',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Navbar currentPath={location} />
 
         <main style={{ flex: 1 }}>
-          {isAboutPage ? (
-            <AboutPage />
-          ) : isTeamsIndex ? (
-            <TeamsPage />
-          ) : teamSlug ? (
-            <TeamDetailPage slug={teamSlug} />
-          ) : (
-            <>
-              <HeroSection />
-              <AboutSection />
-              <WhyProcomSection />
-              <CompetitionCategoriesSection />
-              <MeetTheTeamsSection />
-              <IntroScheduleSection />
-              <RegisterBand />
-            </>
-          )}
+          <ErrorBoundary>
+            <Suspense fallback={<RetroLoader />}>
+              <Switch>
+                <Route path="/" component={HomePage} />
+                <Route path="/about" component={AboutPage} />
+                <Route path="/teams" component={TeamsPage} />
+                <Route path="/teams/:slug">
+                  {(params) => <TeamDetailPage slug={decodeURIComponent(params.slug)} />}
+                </Route>
+                <Route component={HomePage} />
+              </Switch>
+            </Suspense>
+          </ErrorBoundary>
         </main>
 
         <Footer onContactClick={() => setContactOpen(true)} />
@@ -126,5 +206,15 @@ export default function App() {
 
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <Router>
+        <MainLayout />
+      </Router>
+    </ErrorBoundary>
   );
 }

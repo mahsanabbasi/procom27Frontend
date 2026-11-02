@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { X, AlertCircle } from 'lucide-react';
+import { useModalAccessibility } from '../../hooks/useModalAccessibility';
 export const AuthModal = ({ isOpen, initialMode = 'login', onClose, onSuccess, }) => {
+    const { modalRef } = useModalAccessibility(isOpen, onClose);
     const [mode, setMode] = useState(initialMode);
     const { login, register } = useAuth();
     // Login fields
@@ -71,7 +73,7 @@ export const AuthModal = ({ isOpen, initialMode = 'login', onClose, onSuccess, }
             background: 'rgba(5, 6, 12, 0.88)',
             backdropFilter: 'blur(8px)',
         }} onClick={onClose}>
-      <div className="pixel-card" style={{
+      <div ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" className="pixel-card" style={{
             width: '100%',
             maxWidth: '480px',
             maxHeight: '90vh',
@@ -81,14 +83,14 @@ export const AuthModal = ({ isOpen, initialMode = 'login', onClose, onSuccess, }
         }} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <div style={{
+          <div id="auth-modal-title" style={{
             fontFamily: "'Press Start 2P', monospace",
             fontSize: '12px',
             color: '#B995E6',
         }}>
             {mode === 'login' ? '>> PLAYER LOGIN' : '>> NEW PLAYER REGISTRATION'}
           </div>
-          <button type="button" onClick={onClose} style={{
+          <button type="button" onClick={onClose} aria-label="Close dialog" style={{
             background: 'none',
             border: 'none',
             color: 'rgba(238,240,248,.6)',

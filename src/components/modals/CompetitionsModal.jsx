@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
 import { X, Search, Plus } from 'lucide-react';
+import { useModalAccessibility } from '../../hooks/useModalAccessibility';
 const CATEGORIES = [
     { id: 'ALL', label: 'ALL EVENTS' },
     { id: 'CS_AI', label: 'CS & AI' },
@@ -103,6 +104,7 @@ const DEFAULT_COMPETITIONS = [
     },
 ];
 export const CompetitionsModal = ({ isOpen, onClose, onOpenAuth, onOpenPortal, }) => {
+    const { modalRef } = useModalAccessibility(isOpen, onClose);
     const { isAuthenticated } = useAuth();
     const [competitions, setCompetitions] = useState(DEFAULT_COMPETITIONS);
     const [selectedCat, setSelectedCat] = useState('ALL');
@@ -176,7 +178,7 @@ export const CompetitionsModal = ({ isOpen, onClose, onOpenAuth, onOpenPortal, }
             background: 'rgba(5, 6, 12, 0.92)',
             backdropFilter: 'blur(10px)',
         }} onClick={onClose}>
-      <div className="pixel-card" style={{
+      <div ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="competitions-modal-title" className="pixel-card" style={{
             width: '100%',
             maxWidth: '960px',
             maxHeight: '92vh',
@@ -195,7 +197,7 @@ export const CompetitionsModal = ({ isOpen, onClose, onOpenAuth, onOpenPortal, }
             marginBottom: '16px',
         }}>
           <div>
-            <div style={{
+            <div id="competitions-modal-title" style={{
             fontFamily: "'Press Start 2P', monospace",
             fontSize: '12px',
             color: '#F4EEFF',
@@ -207,7 +209,7 @@ export const CompetitionsModal = ({ isOpen, onClose, onOpenAuth, onOpenPortal, }
               Official technical and non-technical categories of PROCOM'27
             </div>
           </div>
-          <button type="button" onClick={onClose} style={{
+          <button type="button" onClick={onClose} aria-label="Close dialog" style={{
             background: 'none',
             border: 'none',
             color: 'rgba(238,240,248,.6)',
@@ -280,7 +282,11 @@ export const CompetitionsModal = ({ isOpen, onClose, onOpenAuth, onOpenPortal, }
                   {teamSubmitting ? 'GENERATING CODE...' : '▶ CONFIRM & CREATE SQUAD'}
                 </button>
               </form>
-            </div>) : (<div style={{
+            </div>) : loading ? (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#B995E6', fontFamily: "'Press Start 2P', monospace", fontSize: '11px' }}>
+                FETCHING ARENAS...
+              </div>
+            ) : (<div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
                 gap: '12px',

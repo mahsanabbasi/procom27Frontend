@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'wouter';
 import { TeamBanner } from './Letterhead.jsx';
 import TeamLeadershipPreview from './TeamLeadershipPreview.jsx';
 import { TEAM_GROUPS, teamsInGroup, teamPath, TEAMS_PATH, ALL_TEAMS, COMPETITION_TEAMS, SUPPORT_TEAMS, countWord } from '../data/teams.js';
@@ -63,7 +64,7 @@ export default function TeamsPage() {
         <ul className="tile-grid teams-grid">
           {teams.map((team, index) => (
             <li key={team.slug} data-load style={{ '--d': `${60 + (index % 8) * 45}ms` }}>
-              <a href={teamPath(team.slug)} className="tile team-tile team-tile-static">
+              <Link href={teamPath(team.slug)} className="tile team-tile team-tile-static">
                 <TeamBanner team={team} />
                 <div className="tile-body">
                   <h3>{team.name}</h3>
@@ -71,7 +72,7 @@ export default function TeamsPage() {
                 </div>
                 <TeamLeadershipPreview team={team} />
                 <span className="tile-action">View team →</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

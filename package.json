@@ -15,7 +15,8 @@
     "embla-carousel-wheel-gestures": "^8.1.0",
     "lucide-react": "^0.460.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "wouter": "^3.13.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

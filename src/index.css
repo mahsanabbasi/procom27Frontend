@@ -185,7 +185,21 @@ select.pixel-input { appearance: auto; }
 @media (max-width: 820px) {
   .nav-links, .nav-actions .nav-login, .nav-actions .pixel-btn-sm { display: none; }
   .nav-menu-btn { display: inline-flex; }
-  .nav-panel { display: grid; gap: 4px; padding: 8px 0 24px; }
+  .nav-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 2px solid var(--surface-2);
+    box-shadow: 0 16px 36px rgba(5, 6, 12, 0.95);
+    z-index: 50;
+    display: grid;
+    gap: 4px;
+    padding: 16px var(--gutter, 24px) 28px;
+    max-height: calc(100svh - 64px);
+    overflow-y: auto;
+  }
   .nav-panel a, .nav-panel button { display: block; width: 100%; text-align: left; padding: 12px 0; font-size: 22px; font-weight: 500; background: none; border: 0; }
   .nav-panel .pixel-btn-primary { display: inline-flex; width: auto; margin-top: 12px; font-size: 13px; }
   .nav-panel[hidden] { display: none; }

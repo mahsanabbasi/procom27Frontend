@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
+import { Link } from 'wouter';
 import { drawPixelMark } from '../utils/pixelMark.js';
 import { COMPETITION_TEAMS, TEAM_GROUPS, teamPath, TEAMS_PATH } from '../data/teams.js';
 import { CreditsPanel, CreditsToggle } from './FooterCredits.jsx';
@@ -19,7 +20,7 @@ function LinkColumn({ title, links }) {
       <ul>
         {links.map((link) => (
           <li key={link.href}>
-            <a href={link.href} className="text-link">{link.label}</a>
+            <Link href={link.href} className="text-link">{link.label}</Link>
           </li>
         ))}
       </ul>

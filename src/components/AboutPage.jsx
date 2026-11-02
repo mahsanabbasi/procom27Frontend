@@ -1,8 +1,9 @@
+import { Link } from "wouter";
 import AboutHistory from "./AboutHistory.jsx";
 import "./AboutPage.css";
 
 function PixelButton({ children, href }) {
-  return <a className="pa-pixel-button" href={href}><span aria-hidden="true">▸</span>{children}<span aria-hidden="true">↗</span></a>;
+  return <Link className="pa-pixel-button" href={href}><span aria-hidden="true">▸</span>{children}<span aria-hidden="true">↗</span></Link>;
 }
 
 export default function AboutPage() {

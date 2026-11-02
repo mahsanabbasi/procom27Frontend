@@ -1,3 +1,4 @@
+import { Link } from 'wouter';
 import { TeamBanner } from './Letterhead.jsx';
 import { UNKNOWN } from '../data/reveals.js';
 import { PROCOM_FORM_URL, EXTERNAL } from '../data/links.js';
@@ -9,8 +10,8 @@ function NotFound({ slug }) {
       <h1 className="team-title">No team at “{slug}”</h1>
       <p className="lead muted">Every PROCOM’27 team is listed on the home page.</p>
       <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
-        <a href="/#competitions" className="text-link">Competition teams</a>
-        <a href="/#teams" className="text-link">Other teams</a>
+        <Link href="/#competitions" className="text-link">Competition teams</Link>
+        <Link href="/#teams" className="text-link">Other teams</Link>
       </div>
     </div>
   );
@@ -49,7 +50,7 @@ export default function TeamDetailPage({ slug }) {
             )}
             <div className="hero-actions" data-load style={{ '--d': '360ms' }}>
               <a href={PROCOM_FORM_URL} {...EXTERNAL} className="pixel-btn-primary">Apply to join</a>
-              <a href="/teams" className="pixel-btn-secondary">All teams</a>
+              <Link href="/teams" className="pixel-btn-secondary">All teams</Link>
             </div>
           </div>
         </div>

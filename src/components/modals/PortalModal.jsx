@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../api/client';
 import { X, AlertTriangle, QrCode, Users, CreditCard, FileText, RefreshCw, KeyRound } from 'lucide-react';
+import { useModalAccessibility } from '../../hooks/useModalAccessibility';
 export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
+  const { modalRef } = useModalAccessibility(isOpen, onClose);
   const { user, refreshUser } = useAuth();
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -121,7 +123,7 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
       setPassMsg({ text: res.message || 'Failed to change password', isError: true });
     }
   };
-  const activeTicket = dashboard?.registeredCompetitions.find((rc) => rc.gatePass?.qrDataUrl);
+  const activeTicket = dashboard?.registeredCompetitions?.find((rc) => rc.gatePass?.qrDataUrl);
   return (<div style={{
     position: 'fixed',
     inset: 0,
@@ -133,7 +135,7 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
     background: 'rgba(5, 6, 12, 0.92)',
     backdropFilter: 'blur(10px)',
   }} onClick={onClose}>
-    <div className="pixel-card" style={{
+    <div ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="portal-modal-title" className="pixel-card" style={{
       width: '100%',
       maxWidth: '840px',
       maxHeight: '92vh',
@@ -152,7 +154,7 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
         marginBottom: '16px',
       }}>
         <div>
-          <div style={{
+          <div id="portal-modal-title" style={{
             fontFamily: "'Press Start 2P', monospace",
             fontSize: '12px',
             color: '#F4EEFF',
@@ -164,7 +166,7 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
             {user?.fullName} · {user?.university || 'FAST-NUCES'} · {user?.email}
           </div>
         </div>
-        <button type="button" onClick={onClose} style={{
+        <button type="button" onClick={onClose} aria-label="Close dialog" style={{
           background: 'none',
           border: 'none',
           color: 'rgba(238,240,248,.6)',
@@ -249,7 +251,7 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
                   TEAMS
                 </div>
                 <div style={{ fontSize: '24px', fontWeight: 600, color: '#F4EEFF', marginTop: '8px' }}>
-                  {dashboard?.registeredCompetitions.length || 0}
+                  {dashboard?.registeredCompetitions?.length || 0}
                 </div>
               </div>
 
@@ -294,10 +296,10 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
                 </button>
               </div>
 
-              {dashboard?.registeredCompetitions.length === 0 ? (<div style={{ padding: '24px', textAlign: 'center', background: 'rgba(0,0,0,0.3)', color: 'rgba(238,240,248,.6)' }}>
+              {(dashboard?.registeredCompetitions?.length ?? 0) === 0 ? (<div style={{ padding: '24px', textAlign: 'center', background: 'rgba(0,0,0,0.3)', color: 'rgba(238,240,248,.6)' }}>
                 No competitions registered yet. Join a team using a join code or register for an event!
               </div>) : (<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {dashboard?.registeredCompetitions.map((rc) => (<div key={rc.teamId} style={{
+                {dashboard?.registeredCompetitions?.map((rc) => (<div key={rc.teamId} style={{
                   padding: '16px',
                   background: 'rgba(0,0,0,0.5)',
                   border: '1px solid rgba(185,149,230,.25)',
@@ -355,7 +357,7 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
             </div>
 
             {/* Teams List */}
-            {dashboard?.registeredCompetitions.map((rc) => (<div key={rc.teamId} style={{
+            {dashboard?.registeredCompetitions?.map((rc) => (<div key={rc.teamId} style={{
               padding: '18px',
               background: 'rgba(0,0,0,0.4)',
               border: '1px solid rgba(185,149,230,0.3)',
@@ -425,7 +427,7 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
                 Event: {activeTicket.competition.title} ({activeTicket.teamName})
               </div>
               <div style={{ fontSize: '10px', color: '#4DF3FF', marginTop: '8px', fontFamily: 'monospace' }}>
-                HMAC: {activeTicket.gatePass.qrSignature.slice(0, 16)}...
+                HMAC: {activeTicket?.gatePass?.qrSignature?.slice(0, 16) ?? 'N/A'}...
               </div>
               <div style={{ marginTop: '12px', fontSize: '10px', color: 'rgba(238,240,248,.5)' }}>
                 Status: {activeTicket.gatePass.isCheckedIn ? 'CHECKED IN' : 'VALID FOR ENTRY'}
@@ -457,12 +459,12 @@ export const PortalModal = ({ isOpen, onClose, onOpenCompetitions }) => {
                   </label>
                   <select className="pixel-input" value={paymentTeamId} onChange={(e) => {
                     setPaymentTeamId(e.target.value);
-                    const t = dashboard?.registeredCompetitions.find((r) => r.teamId === e.target.value);
+                    const t = dashboard?.registeredCompetitions?.find((r) => r.teamId === e.target.value);
                     if (t)
                       setPaymentAmount(String(t.competition.registrationFee));
                   }} required>
                     <option value="">-- Choose Team --</option>
-                    {dashboard?.registeredCompetitions.map((rc) => (<option key={rc.teamId} value={rc.teamId}>
+                    {dashboard?.registeredCompetitions?.map((rc) => (<option key={rc.teamId} value={rc.teamId}>
                       {rc.teamName} ({rc.competition.title}) - PKR {rc.competition.registrationFee}
                     </option>))}
                   </select>
