@@ -2,16 +2,36 @@
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
+// Some browsers block site storage, and touching it then throws, which used
+// to blank the whole site. The token is kept in memory too, so a visitor
+// there still sees the site and stays signed in until they leave.
+const TOKEN_KEY = 'procom_access_token';
+let tokenInMemory = null;
+
 export function getToken() {
-  return localStorage.getItem('procom_access_token');
+  try {
+    return localStorage.getItem(TOKEN_KEY);
+  } catch {
+    return tokenInMemory;
+  }
 }
 
 export function setToken(token) {
-  localStorage.setItem('procom_access_token', token);
+  tokenInMemory = token;
+  try {
+    localStorage.setItem(TOKEN_KEY, token);
+  } catch {
+    // Blocked: the copy in memory lasts for this visit.
+  }
 }
 
 export function removeToken() {
-  localStorage.removeItem('procom_access_token');
+  tokenInMemory = null;
+  try {
+    localStorage.removeItem(TOKEN_KEY);
+  } catch {
+    // Blocked: nothing was stored.
+  }
 }
 
 export async function apiRequest(endpoint, options = {}) {
