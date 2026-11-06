@@ -1,42 +1,62 @@
+/* Global design tokens and base styles for the PROCOM site. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap");
 @import "tailwindcss";
 
+/* Shared color and typography tokens; aliases preserve existing utility names. */
 @theme {
-	--color-bg-000: #07060b;
+	--color-background: #07060b;
+	--color-card: #100c16;
+	--color-accent: #b57cff;
+	--color-highlight: #dcc8ff;
+	--color-border: #493460;
+	--color-text: #f5f0fa;
+	--color-muted: #a198a8;
+	--color-bg-000: var(--color-background);
 	--color-bg-100: #0b0910;
-	--color-bg-200: #100c16;
-	--color-line-subtle: #1c1524;
-	--color-violet-800: #493460;
-	--color-violet-500: #b57cff;
-	--color-violet-200: #dcc8ff;
-	--color-ink: #f5f0fa;
-	--color-ink-muted: #a198a8;
-	--color-violet-tint-14: rgb(181 124 255 / 14%);
-	--font-ui: "Space Grotesk", sans-serif;
-	--font-pixel: "Silkscreen", monospace;
+	--color-bg-200: var(--color-card);
+	--color-line-subtle: var(--color-border);
+	--color-violet-800: var(--color-border);
+	--color-violet-500: var(--color-accent);
+	--color-violet-200: var(--color-highlight);
+	--color-ink: var(--color-text);
+	--color-ink-muted: var(--color-muted);
+	--color-violet-tint-14: color-mix(in srgb, var(--color-accent) 14%, transparent);
+	--font-body: "Inter", sans-serif;
+	--font-heading: "Press Start 2P", monospace;
+	--font-ui: var(--font-body);
+	--font-pixel: "Press Start 2P", monospace;
 	--font-stat: "Press Start 2P", monospace;
 }
 
+/* Global box sizing and minimum viewport behavior. */
 * {
 	box-sizing: border-box;
 }
 
 html {
 	min-width: 320px;
-	background: #07060b;
+	background: var(--color-background);
 }
 
+/* Establish the page's default palette and body typography. */
 body {
 	min-width: 320px;
 	min-height: 100vh;
 	margin: 0;
-	background: #07060b;
-	color: #f5f0fa;
-	font-family: "Space Grotesk", sans-serif;
+	background: var(--color-background);
+	color: var(--color-text);
+	font-family: var(--font-body);
 	-webkit-font-smoothing: antialiased;
 }
 
-::selection {
-	background: rgb(181 124 255 / 30%);
-	color: #f5f0fa;
+h1,
+h2,
+h3 {
+	font-family: var(--font-heading);
 }
 
+/* Keep selection colors aligned with the shared palette. */
+::selection {
+	background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+	color: var(--color-text);
+}
