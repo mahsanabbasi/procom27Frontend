@@ -1,0 +1,8 @@
+/* Keeps the site-wide stylesheet (src/index.css) from leaking into the
+   arcade design, so the Teams page renders exactly like the design file. */
+html.pd-page,
+html.pd-page body { background: #07060B; }
+html.pd-page body::after { content: none; } /* the site's scanline overlay; the design has its own (.cheat) */
+.pd :is(h1, h2, h3, p) { text-wrap: wrap; }
+.pd .section[id] { scroll-margin-top: 0; }
+.pd .footer { color: inherit; }
