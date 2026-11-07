@@ -6,7 +6,7 @@ import { COMPETITION_TEAMS, ALL_TEAMS, teamPath, TEAMS_PATH } from '../data/team
 // Each tile opens the student team that runs that category.
 export const CompetitionCategoriesSection = () => {
   return (
-    <section id="competitions" className="shell section" aria-labelledby="competitions-title">
+    <section id="competitions" className="shell section" aria-labelledby="competitions-title" data-munch="trophy" data-munch-label="Competitions">
       <header className="section-head" data-reveal>
         <h2 id="competitions-title" className="heading">Competition categories</h2>
         <p className="muted">Find the one that fits your field.</p>

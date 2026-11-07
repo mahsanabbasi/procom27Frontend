@@ -1,7 +1,7 @@
 // Composes the Home page and isolates its Home-specific design and navigation.
 import './home.css';
 import { HomeHeader } from './HomeHeader.jsx';
-import { HeroSection } from '../HeroSection.jsx';
+import HomeHero from './HomeHero.jsx';
 import { AboutSection } from '../AboutSection.jsx';
 import { WhyProcomSection } from '../WhyProcomSection.jsx';
 import { CompetitionCategoriesSection } from '../CompetitionCategoriesSection.jsx';
@@ -13,7 +13,7 @@ export default function HomePage({ onContactClick }) {
   return (
     <div className="home-page">
       <HomeHeader onContactClick={onContactClick} />
-      <HeroSection />
+      <HomeHero />
       <AboutSection />
       <WhyProcomSection />
       <CompetitionCategoriesSection />

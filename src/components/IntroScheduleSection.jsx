@@ -33,7 +33,7 @@ export const IntroScheduleSection = () => {
   const statuses = slotStatuses(now);
 
   return (
-    <section id="schedule" className="shell section" aria-labelledby="schedule-title">
+    <section id="schedule" className="shell section" aria-labelledby="schedule-title" data-munch="calendar" data-munch-label="Schedule">
       <header className="section-head" data-reveal>
         <h2 id="schedule-title" className="heading">Intro Day</h2>
         <p className="lead-date">{INTRO_DAY.dateLabel} · {INTRO_DAY.venue}</p>
