@@ -52,48 +52,6 @@ export default function HomeHero() {
                 <button className="dpad__b dpad__b--d" type="button" data-act="down" aria-label="Jump to registration">
                   <Icon name="chevron-down" />
                 </button>
-                <span className="dpad__x" aria-hidden="true">
-                  <svg viewBox="0 0 19 19">
-                    <rect x="6" y="0" width="7" height="19" fill="#07060B" />
-                    <rect x="0" y="6" width="19" height="7" fill="#07060B" />
-                    <rect x="7" y="1" width="5" height="17" fill="#4A3562" />
-                    <rect x="1" y="7" width="17" height="5" fill="#4A3562" />
-                    <rect x="7" y="1" width="5" height="1" fill="#7E62A0" />
-                    <rect x="7" y="1" width="1" height="6" fill="#7E62A0" />
-                    <rect x="1" y="7" width="6" height="1" fill="#7E62A0" />
-                    <rect x="1" y="7" width="1" height="5" fill="#7E62A0" />
-                    <rect x="12" y="7" width="6" height="1" fill="#7E62A0" />
-                    <rect x="7" y="12" width="1" height="6" fill="#7E62A0" />
-                    <rect x="11" y="2" width="1" height="5" fill="#2E2140" />
-                    <rect x="1" y="11" width="6" height="1" fill="#2E2140" />
-                    <rect x="17" y="8" width="1" height="4" fill="#2E2140" />
-                    <rect x="12" y="11" width="6" height="1" fill="#2E2140" />
-                    <rect x="11" y="12" width="1" height="6" fill="#2E2140" />
-                    <rect x="7" y="17" width="5" height="1" fill="#2E2140" />
-                    <rect className="arm arm-u" x="7" y="1" width="5" height="6" fill="#07060B" opacity=".45" />
-                    <rect className="arm arm-d" x="7" y="12" width="5" height="6" fill="#07060B" opacity=".45" />
-                    <rect className="arm arm-l" x="1" y="7" width="6" height="5" fill="#07060B" opacity=".45" />
-                    <rect className="arm arm-r" x="12" y="7" width="6" height="5" fill="#07060B" opacity=".45" />
-                    <rect x="8" y="8" width="3" height="3" fill="#2E2140" />
-                    <rect x="9" y="9" width="1" height="1" fill="#7E62A0" />
-                    <g className="arr arr-u" fill="#B57CFF">
-                      <rect x="9" y="3" width="1" height="1" />
-                      <rect x="8" y="4" width="3" height="1" />
-                    </g>
-                    <g className="arr arr-d" fill="#B57CFF">
-                      <rect x="8" y="14" width="3" height="1" />
-                      <rect x="9" y="15" width="1" height="1" />
-                    </g>
-                    <g className="arr arr-l" fill="#B57CFF">
-                      <rect x="3" y="9" width="1" height="1" />
-                      <rect x="4" y="8" width="1" height="3" />
-                    </g>
-                    <g className="arr arr-r" fill="#B57CFF">
-                      <rect x="15" y="9" width="1" height="1" />
-                      <rect x="14" y="8" width="1" height="3" />
-                    </g>
-                  </svg>
-                </span>
               </div>
               <button
                 className="nub"

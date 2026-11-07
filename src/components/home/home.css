@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap");
 
-/* Home-only copy of the reference tokens and shared header styles. */
+/* Home-only reference tokens and shared header styles. */
 .home-page {
   --c-bg: #07060B;
   --c-bg-2: #0B0910;
@@ -15,7 +15,16 @@
   --c-tint-3: rgba(181,124,255,.28);
   --c-shade: rgba(7,6,11,.32);
   --c-muted: rgba(161,152,168,.45);
-  --glow: 0 0 0 1px rgba(220,200,255,.35),0 0 28px rgba(181,124,255,.45);
+  --glow: 0 0 0 2px var(--c-primary);
+  --c-plum: #140C22;
+  --c-plum-2: #1E1231;
+  --c-grape: #3C2B52;
+  --c-violet: #5A2FA0;
+  --c-ink: #000;
+  --hard: 4px 4px 0 #000;
+  --hard-p: 4px 4px 0 var(--c-primary);
+  --pxc: polygon(33.33% 0,66.67% 0,66.67% 8.33%,83.33% 8.33%,83.33% 16.67%,91.67% 16.67%,91.67% 33.33%,100% 33.33%,100% 66.67%,91.67% 66.67%,91.67% 83.33%,83.33% 83.33%,83.33% 91.67%,66.67% 91.67%,66.67% 100%,33.33% 100%,33.33% 91.67%,16.67% 91.67%,16.67% 83.33%,8.33% 83.33%,8.33% 66.67%,0 66.67%,0 33.33%,8.33% 33.33%,8.33% 16.67%,16.67% 16.67%,16.67% 8.33%,33.33% 8.33%);
+  --pxr: polygon(0 4px,4px 4px,4px 0,calc(100% - 4px) 0,calc(100% - 4px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 4px),0 calc(100% - 4px));
   --f-display: 'Press Start 2P','Pixelify Sans',ui-monospace,monospace;
   --f-pixel: 'Pixelify Sans','Press Start 2P',ui-monospace,monospace;
   --f-body: 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
@@ -219,7 +228,7 @@
    ===================================================================== */
 .home-page .hero{position:relative;padding:clamp(14px,2vw,28px) 0 clamp(36px,4vw,56px);overflow:hidden;isolation:isolate}
 .home-page .hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(ellipse 55% 50% at 50% 48%,rgba(181,124,255,.2),transparent 70%),linear-gradient(rgba(73,52,96,.2) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(73,52,96,.2) 1px,transparent 1px) 0 0/48px 48px;
+  background:linear-gradient(rgba(73,52,96,.2) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(73,52,96,.2) 1px,transparent 1px) 0 0/48px 48px;
   -webkit-mask:radial-gradient(ellipse 75% 75% at 50% 50%,#000 25%,transparent 78%);mask:radial-gradient(ellipse 75% 75% at 50% 50%,#000 25%,transparent 78%)}
 
 .home-page .console{--side:clamp(150px,13vw,196px);position:relative;width:min(1380px,calc(100% - 48px));margin:0 auto;padding-top:16px}
@@ -322,7 +331,7 @@
 @keyframes home-bootWord{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
 .home-page .boot.is-run .boot__bar i{animation:home-bootBar 1.3s steps(12) .5s forwards}
 @keyframes home-bootBar{to{width:calc(100% - 2px)}}
-.home-page .boot.is-run .boot__hint{animation:blink 1s steps(2) .9s infinite}
+.home-page .boot.is-run .boot__hint{animation:home-blink 1s steps(2) .9s infinite}
 .home-page .boot.is-done{opacity:0;transition:opacity .4s}
 .home-page .sleep{position:absolute;inset:0;z-index:8;display:none;place-content:center;justify-items:center;gap:12px;text-align:center;background:var(--c-bg);color:var(--c-text-2);font-size:13px}
 .home-page .sleep .t-label{color:var(--c-primary);font-size:9px}
@@ -334,9 +343,7 @@
 .home-page .osd__bars i{width:6px;height:12px;background:var(--c-border)}
 .home-page .osd__bars i.on{background:var(--c-primary-bright)}
 
-/* controls — chunky pixel-art sprites: hard outlines, flat two-tone shading, hard drop shadows, no glow */
-.home-page :root{--pxc:polygon(33.33% 0,66.67% 0,66.67% 8.33%,83.33% 8.33%,83.33% 16.67%,91.67% 16.67%,91.67% 33.33%,100% 33.33%,100% 66.67%,91.67% 66.67%,91.67% 83.33%,83.33% 83.33%,83.33% 91.67%,66.67% 91.67%,66.67% 100%,33.33% 100%,33.33% 91.67%,16.67% 91.67%,16.67% 83.33%,8.33% 83.33%,8.33% 66.67%,0 66.67%,0 33.33%,8.33% 33.33%,8.33% 16.67%,16.67% 16.67%,16.67% 8.33%,33.33% 8.33%);
-  --pxr:polygon(0 4px,4px 4px,4px 0,calc(100% - 4px) 0,calc(100% - 4px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 4px),0 calc(100% - 4px))}
+/* Controls: chunky pixel-art sprites with hard outlines and shadows. */
 
 /* D-pad: one pixel sprite, the pressed arm sinks and the pad tips toward it */
 .home-page .dpad{--dp:120px;position:relative;isolation:isolate;width:var(--dp);height:var(--dp);display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);perspective:320px}
@@ -436,6 +443,32 @@
   .home-page .screen__status .ss__dim{display:none}
 }
 
+/* Full-viewport console layout from the final reference. */
+.home-page .hero{padding:0;min-height:calc(100svh - var(--nav-h,72px));display:flex}
+.home-page .hero::before{display:none}
+.home-page .console{display:flex;flex:1;width:100%;margin:0;padding-top:0}
+.home-page .console__shell{flex:1;width:100%;border-radius:0 0 clamp(48px,6vw,120px) clamp(48px,6vw,120px);padding:clamp(14px,1.4vw,22px) 0 clamp(16px,1.6vw,26px)}
+.home-page .console__shell::before{border-radius:inherit}
+.home-page .console__mid{display:flex;flex-direction:column}
+.home-page .console__glass{display:flex;flex:1}
+.home-page .screen{display:flex;flex:1;flex-direction:column;min-height:clamp(470px,calc(100svh - var(--nav-h,72px) - 140px),780px)}
+.home-page .screen>.scr{flex:1}
+.home-page .console__sh{top:10px;z-index:3;height:30px;padding-top:7px;font-size:8px}
+.home-page .console__sh:hover{transform:translateY(2px)}
+.home-page .console__sh--l{left:clamp(20px,3vw,56px)}
+.home-page .console__sh--r{right:clamp(20px,3vw,56px)}
+@media (max-width:1100px){
+  .home-page .hero{min-height:0}
+  .home-page .console{width:100%}
+  .home-page .console__shell{border-radius:0 0 clamp(28px,6vw,48px) clamp(28px,6vw,48px);padding-top:44px}
+  .home-page .screen{min-height:0}
+  .home-page .console__mid{display:contents}
+}
+@media (max-width:640px){
+  .home-page .console{width:100%}
+  .home-page .console__shell{padding:40px 10px 18px}
+  .home-page .console__sh{top:6px}
+}
 
 
 /* Marquee ticker */
@@ -486,4 +519,13 @@
 .home-page .btn--arcade::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(7,6,11,.14) 0 1px,transparent 1px 3px)}
 .home-page .btn--arcade:hover{background:var(--c-primary-bright);box-shadow:0 5px 0 var(--c-border),var(--glow)}
 .home-page .btn--arcade:active{transform:translateY(4px);box-shadow:0 1px 0 var(--c-border)}
+
+/* Solid button and stat-card treatment from the final reference. */
+.home-page .hero .btn{transition:transform .08s steps(2),box-shadow .08s steps(2),background .12s,color .12s,border-color .12s}
+.home-page .hero .btn--primary,.home-page .hero .btn--arcade{box-shadow:var(--hard)}
+.home-page .hero .btn--primary:hover,.home-page .hero .btn--arcade:hover{background:var(--c-primary-bright);border-color:var(--c-primary-bright);transform:translate(-2px,-2px);box-shadow:6px 6px 0 #000}
+.home-page .hero .btn--primary:active,.home-page .hero .btn--arcade:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+.home-page .hero .btn--secondary{background:var(--c-plum-2);border-color:var(--c-grape)}
+.home-page .hero .btn--secondary:hover{background:var(--c-grape);border-color:var(--c-primary);color:var(--c-text)}
+.home-page .hero .card{background:var(--c-plum)}
 .home-page [hidden]{display:none!important}
