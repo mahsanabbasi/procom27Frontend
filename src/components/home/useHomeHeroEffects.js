@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { homeHeroContent } from '../../data/homeHero.js';
+import { ensureHomeFontsReady } from './homeFonts.js';
 
 const LOGO_PATH = 'M0 0L178 63V127L98 170V143L80 147V213L28 243V145L125 95L28 55Z';
 const DECODE_GLYPHS = 'ABCDEFGHJKMNPQRSTUVWXYZ0123456789#%&*+/<>'.split('');
@@ -13,6 +14,19 @@ const SOUND_BANK = {
 
 const pad2 = (value) => String(value).padStart(2, '0');
 
+function getInitialBootState() {
+  const reducedMotion = typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let booted = false;
+  try {
+    booted = window.sessionStorage.getItem('procom27-boot') === '1';
+  } catch {
+    booted = false;
+  }
+  const showBoot = !reducedMotion && !booted;
+  return { showBoot, screenOn: !showBoot };
+}
+
 export function useHomeHeroEffects() {
   const consoleRef = useRef(null);
   const screenRef = useRef(null);
@@ -25,15 +39,16 @@ export function useHomeHeroEffects() {
   const [selectionVisible, setSelectionVisible] = useState(false);
   const [screenOff, setScreenOff] = useState(false);
   const [consoleSleeping, setConsoleSleeping] = useState(false);
-  const [screenOn, setScreenOn] = useState(false);
-  const [bootVisible, setBootVisible] = useState(false);
-  const [bootRunning, setBootRunning] = useState(false);
+  const [initialBootState] = useState(getInitialBootState);
+  const [screenOn, setScreenOn] = useState(initialBootState.screenOn);
+  const [bootVisible, setBootVisible] = useState(initialBootState.showBoot);
+  const [bootRunning, setBootRunning] = useState(initialBootState.showBoot);
   const [bootDone, setBootDone] = useState(false);
   const [brightness, setBrightness] = useState(0);
   const [osd, setOsd] = useState(null);
   const [clock, setClock] = useState('--:--');
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const consoleElement = consoleRef.current;
     const screen = screenRef.current;
     const logoCanvas = logoCanvasRef.current;
@@ -50,6 +65,8 @@ export function useHomeHeroEffects() {
     }
 
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let active = true;
+    let bootSequence = 0;
     const timers = new Set();
     const decodeTimers = new Set();
     const cleanupListeners = [];
@@ -117,7 +134,7 @@ export function useHomeHeroEffects() {
     const later = (callback, delay) => {
       const timer = window.setTimeout(() => {
         timers.delete(timer);
-        callback();
+        if (active) callback();
       }, delay);
       timers.add(timer);
       return timer;
@@ -129,10 +146,11 @@ export function useHomeHeroEffects() {
       }
     };
     const requestFrame = (callback) => {
+      if (!active) return 0;
       let frame = 0;
       frame = window.requestAnimationFrame((time) => {
         frames.delete(frame);
-        callback(time);
+        if (active) callback(time);
       });
       frames.add(frame);
       return frame;
@@ -143,6 +161,7 @@ export function useHomeHeroEffects() {
         frames.delete(frame);
       }
     };
+    const homeFontsReady = ensureHomeFontsReady();
 
     try {
       soundEnabled = window.localStorage.getItem('procom27-sfx') === '1';
@@ -406,6 +425,9 @@ export function useHomeHeroEffects() {
         drawStaticOrbit();
         return;
       }
+      drawLogo(logoTime, true);
+      drawWave(waveTime);
+      bodies.forEach(placeBody);
       const runLogo = (time) => {
         if (lastLogoTime === null) lastLogoTime = time;
         const delta = Math.min(0.05, Math.max(0, (time - lastLogoTime) / 1000));
@@ -581,47 +603,59 @@ export function useHomeHeroEffects() {
     }
 
     function startHero() {
+      if (!active) return;
       screen.classList.add('is-on');
       setScreenOn(true);
       decodeHeadline();
       countStats();
     }
 
-    function finishBoot() {
-      if (bootFinished) return;
+    function finishBoot(sequence = bootSequence) {
+      if (!active || bootFinished || sequence !== bootSequence) return;
       bootFinished = true;
       clearTimer(bootTimer);
-      setBootDone(true);
-      setBootRunning(false);
-      later(() => setBootVisible(false), 420);
-      startHero();
-      booted = true;
-      try {
-        window.sessionStorage.setItem('procom27-boot', '1');
-      } catch {
-        console.warn('Could not save the Home hero startup state.');
-      }
+      homeFontsReady.then(() => {
+        if (!active || sequence !== bootSequence) return;
+        setBootDone(true);
+        setBootRunning(false);
+        later(() => setBootVisible(false), 420);
+        startHero();
+        booted = true;
+        try {
+          window.sessionStorage.setItem('procom27-boot', '1');
+        } catch {
+          console.warn('Could not save the Home hero startup state.');
+        }
+      });
     }
 
     function boot(force) {
+      const sequence = ++bootSequence;
+      bootFinished = false;
       screen.classList.remove('is-off');
       consoleElement.classList.remove('is-sleep');
       setScreenOff(false);
       setConsoleSleeping(false);
+      clearTimer(bootTimer);
       if (!motionEnabled || (!force && booted)) {
         setBootVisible(false);
-        startHero();
+        setBootRunning(false);
+        homeFontsReady.then(() => {
+          if (active && sequence === bootSequence) startHero();
+        });
         return;
       }
-      clearTimer(bootTimer);
       screen.classList.remove('is-on');
       setScreenOn(false);
       setBootDone(false);
       setBootVisible(true);
-      setBootRunning(true);
-      playSound('start');
-      bootFinished = false;
-      bootTimer = later(finishBoot, 2100);
+      if (force || !initialBootState.showBoot) setBootRunning(false);
+      homeFontsReady.then(() => {
+        if (!active || sequence !== bootSequence || bootFinished || !motionEnabled) return;
+        setBootRunning(true);
+        playSound('start');
+        bootTimer = later(() => finishBoot(sequence), 2100);
+      });
     }
 
     function scrollToId(id) {
@@ -865,13 +899,15 @@ export function useHomeHeroEffects() {
     addListener(nub, 'pointercancel', endNubDrag);
     addListener(nub, 'lostpointercapture', endNubDrag);
     addListener(nub, 'keydown', handleNubKeyDown);
-    addListener(screen.querySelector('.boot'), 'click', finishBoot);
+    addListener(screen.querySelector('.boot'), 'click', () => finishBoot());
 
     tickClock();
     clockInterval = window.setInterval(tickClock, 15000);
     boot(false);
 
     return () => {
+      active = false;
+      bootSequence += 1;
       stopAnimations();
       observers.forEach((observer) => observer.disconnect());
       cleanupListeners.forEach((removeListener) => removeListener());
@@ -881,14 +917,13 @@ export function useHomeHeroEffects() {
       restoreHeadline();
       window.clearInterval(clockInterval);
       if (audioContext && audioContext.state !== 'closed') audioContext.close();
-      screen.style.removeProperty('--dim');
       screen.style.removeProperty('--gx');
       screen.style.removeProperty('--gy');
-      consoleElement.classList.remove('is-flash', 'is-sleep');
-      screen.classList.remove('is-on', 'is-off', 'pulse');
+      consoleElement.classList.remove('is-flash');
+      screen.classList.remove('pulse');
       nub.classList.remove('is-drag');
     };
-  }, []);
+  }, [initialBootState.showBoot]);
 
   return {
     consoleRef,

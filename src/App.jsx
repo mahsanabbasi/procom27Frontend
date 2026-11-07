@@ -6,8 +6,11 @@ import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 import { getTeamBySlug } from './data/teams.js';
+import { ensureHomeFontsReady } from './components/home/homeFonts.js';
 
-const HomePage = lazy(() => import('./components/home/HomePage.jsx'));
+import HomePage from './components/home/HomePage.jsx';
+
+ensureHomeFontsReady();
 const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
 const TeamsPage = lazy(() => import('./components/TeamsPage.jsx'));
 const TeamDetailPage = lazy(() => import('./components/TeamDetailPage.jsx'));
