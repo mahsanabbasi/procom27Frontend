@@ -2,18 +2,12 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { Router, Switch, Route, useLocation } from 'wouter';
 import { Starfield } from './components/Starfield.jsx';
 import { Navbar } from './components/Navbar.jsx';
-import { HeroSection } from './components/HeroSection.jsx';
-import { AboutSection } from './components/AboutSection.jsx';
-import { CompetitionCategoriesSection } from './components/CompetitionCategoriesSection.jsx';
-import { WhyProcomSection } from './components/WhyProcomSection.jsx';
-import { MeetTheTeamsSection } from './components/MeetTheTeamsSection.jsx';
-import { IntroScheduleSection } from './components/IntroScheduleSection.jsx';
-import { RegisterBand } from './components/RegisterBand.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 import { getTeamBySlug } from './data/teams.js';
 
+const HomePage = lazy(() => import('./components/home/HomePage.jsx'));
 const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
 const TeamsPage = lazy(() => import('./components/TeamsPage.jsx'));
 const TeamDetailPage = lazy(() => import('./components/TeamDetailPage.jsx'));
@@ -101,20 +95,6 @@ function RetroLoader() {
         />
       </div>
     </div>
-  );
-}
-
-function HomePage() {
-  return (
-    <>
-      <HeroSection />
-      <AboutSection />
-      <WhyProcomSection />
-      <CompetitionCategoriesSection />
-      <MeetTheTeamsSection />
-      <IntroScheduleSection />
-      <RegisterBand />
-    </>
   );
 }
 
