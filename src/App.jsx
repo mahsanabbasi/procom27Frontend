@@ -163,13 +163,15 @@ function MainLayout() {
           flexDirection: 'column',
         }}
       >
-        <Navbar currentPath={location} />
+        {location !== '/' && <Navbar currentPath={location} />}
 
         <main style={{ flex: 1 }}>
           <ErrorBoundary>
             <Suspense fallback={<RetroLoader />}>
               <Switch>
-                <Route path="/" component={HomePage} />
+                <Route path="/">
+                  {() => <HomePage onContactClick={() => setContactOpen(true)} />}
+                </Route>
                 <Route path="/about" component={AboutPage} />
                 <Route path="/teams" component={TeamsPage} />
                 <Route path="/teams/:slug">

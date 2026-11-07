@@ -1,4 +1,6 @@
-// Composes the existing home-page sections without changing their behavior.
+// Composes the Home page and isolates its Home-specific design and navigation.
+import './home.css';
+import { HomeHeader } from './HomeHeader.jsx';
 import { HeroSection } from '../HeroSection.jsx';
 import { AboutSection } from '../AboutSection.jsx';
 import { WhyProcomSection } from '../WhyProcomSection.jsx';
@@ -7,9 +9,10 @@ import { MeetTheTeamsSection } from '../MeetTheTeamsSection.jsx';
 import { IntroScheduleSection } from '../IntroScheduleSection.jsx';
 import { RegisterBand } from '../RegisterBand.jsx';
 
-export default function HomePage() {
+export default function HomePage({ onContactClick }) {
   return (
-    <>
+    <div className="home-page">
+      <HomeHeader onContactClick={onContactClick} />
       <HeroSection />
       <AboutSection />
       <WhyProcomSection />
@@ -17,6 +20,6 @@ export default function HomePage() {
       <MeetTheTeamsSection />
       <IntroScheduleSection />
       <RegisterBand />
-    </>
+    </div>
   );
 }
