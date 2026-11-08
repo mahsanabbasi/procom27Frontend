@@ -1,0 +1,27 @@
+export const STEPS = [0, 60, 150, 280, 450, 660, 920, 1240, 1620, 2060, 2600];
+export const QUESTS = [
+  { id: "boot", label: "Power on the console", pts: 10 },
+  { id: "explore", label: "Collect every power-up in the HP bar", pts: 60 },
+  { id: "start", label: "Press START GAME", pts: 40 },
+  { id: "claw", label: "Win a prize from the claw machine", pts: 60 },
+  { id: "cart", label: "Swap a cartridge in the handheld", pts: 30 },
+  { id: "sched", label: "Inspect a session on the schedule", pts: 25 },
+  { id: "plan", label: "Star a session for your plan", pts: 40 },
+  { id: "cab", label: "Start an arcade machine", pts: 40 },
+  { id: "shoot", label: "Blast a target in Why Attend", pts: 40 },
+  { id: "brick", label: "Clear the brick wall on Why Attend", pts: 50 },
+  { id: "lobby", label: "Join the lobby on Why Attend", pts: 20 },
+  { id: "boss", label: "Defeat the final boss on Why Attend", pts: 60 },
+  { id: "team", label: "Pick a team on the Teams page", pts: 40 },
+  { id: "party", label: "Climb to the top rank on the Teams page", pts: 25 },
+  { id: "over", label: "Reach the GAME OVER screen", pts: 40 },
+  { id: "runner", label: "Play Bit Runner in the footer", pts: 50 },
+  { id: "champ", label: "Take the Bit Runner champion spot", pts: 100 },
+  { id: "coin", label: "Insert a coin", pts: 10 },
+  {
+    id: "konami",
+    label: "Enter the secret cheat code",
+    pts: 150,
+    secret: true,
+  },
+];

@@ -14,6 +14,7 @@ import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 import { getTeamBySlug } from './data/teams.js';
 
+const WhyAttendPage = lazy(() => import('./components/whyAttend/WhyAttendPage.jsx'));
 const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
 const TeamsPage = lazy(() => import('./components/TeamsPage.jsx'));
 const TeamDetailPage = lazy(() => import('./components/TeamDetailPage.jsx'));
@@ -122,13 +123,17 @@ function MainLayout() {
   const [location] = useLocation();
   const [contactOpen, setContactOpen] = useState(false);
 
+  const isWhyAttend = /^\/why-attend\/?$/.test(location);
+  const PageContainer = isWhyAttend ? 'div' : 'main';
   const isAboutPage = location === '/about' || location === '/about/';
   const isTeamsIndex = location === '/teams' || location === '/teams/';
   const teamMatch = location.match(/^\/teams\/([^/]+)/);
   const teamSlug = teamMatch ? decodeURIComponent(teamMatch[1]) : null;
 
   useEffect(() => {
-    if (isAboutPage) {
+    if (isWhyAttend) {
+      document.title = 'Why Attend PROCOM’27 — Where Skill Meets Scale';
+    } else if (isAboutPage) {
       document.title = "About Us | PROCOM'27";
     } else if (isTeamsIndex) {
       document.title = "Teams | PROCOM'27";
@@ -138,7 +143,7 @@ function MainLayout() {
     } else {
       document.title = "PROCOM'27 | FAST NUCES Karachi";
     }
-  }, [isAboutPage, isTeamsIndex, teamSlug]);
+  }, [isWhyAttend, isAboutPage, isTeamsIndex, teamSlug]);
 
   useEntrances(location);
 
@@ -171,7 +176,7 @@ function MainLayout() {
 
   return (
     <>
-      <Starfield />
+      {!isWhyAttend && <Starfield />}
 
       <div
         id={location !== '/' ? 'top' : undefined}
@@ -183,13 +188,14 @@ function MainLayout() {
           flexDirection: 'column',
         }}
       >
-        <Navbar currentPath={location} />
+        {!isWhyAttend && <Navbar currentPath={location} />}
 
-        <main style={{ flex: 1 }}>
+        <PageContainer style={{ flex: 1 }}>
           <ErrorBoundary>
             <Suspense fallback={<RetroLoader />}>
               <Switch>
                 <Route path="/" component={HomePage} />
+                <Route path="/why-attend" component={WhyAttendPage} />
                 <Route path="/about" component={AboutPage} />
                 <Route path="/teams" component={TeamsPage} />
                 <Route path="/teams/:slug">
@@ -199,9 +205,9 @@ function MainLayout() {
               </Switch>
             </Suspense>
           </ErrorBoundary>
-        </main>
+        </PageContainer>
 
-        <Footer onContactClick={() => setContactOpen(true)} />
+        {!isWhyAttend && <Footer onContactClick={() => setContactOpen(true)} />}
       </div>
 
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
