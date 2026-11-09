@@ -107,6 +107,7 @@ function MainLayout() {
 
   const isAboutPage = location === '/about' || location === '/about/';
   const isTeamsIndex = location === '/teams' || location === '/teams/';
+  const isHomeRoute = location === '/';
   const teamMatch = location.match(/^\/teams\/([^/]+)/);
   const teamSlug = teamMatch ? decodeURIComponent(teamMatch[1]) : null;
 
@@ -154,16 +155,18 @@ function MainLayout() {
 
   return (
     <>
-      <Starfield />
+      {!isHomeRoute && <Starfield />}
 
       <div
         id={location !== '/' ? 'top' : undefined}
+        className={isHomeRoute ? 'app-home-route' : undefined}
         style={{
           position: 'relative',
           zIndex: 1,
           minHeight: '100svh',
           display: 'flex',
           flexDirection: 'column',
+          backgroundColor: isHomeRoute ? '#07060B' : undefined,
         }}
       >
         {location !== '/' && <Navbar currentPath={location} />}
