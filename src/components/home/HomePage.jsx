@@ -4,7 +4,7 @@ import './home.css';
 import { HomeHeader } from './HomeHeader.jsx';
 import HomeHero from './HomeHero.jsx';
 import { AboutSection } from '../AboutSection.jsx';
-import { WhyProcomSection } from '../WhyProcomSection.jsx';
+import WhyAttendSection from './WhyAttendSection.jsx';
 import { IntroScheduleSection } from '../IntroScheduleSection.jsx';
 import RegistrationCalloutSection from './RegistrationCalloutSection.jsx';
 import HomeCompetitionCategoriesSection from './HomeCompetitionCategoriesSection.jsx';
@@ -31,8 +31,8 @@ export default function HomePage({ onContactClick }) {
       <RegistrationCalloutSection />
       <HomeCompetitionCategoriesSection />
       <FeaturedCompetitionsSection />
+      <WhyAttendSection />
       <AboutSection />
-      <WhyProcomSection />
       <IntroScheduleSection />
     </div>
   );
