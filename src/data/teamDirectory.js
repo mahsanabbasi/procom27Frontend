@@ -22,7 +22,7 @@ export const CATEGORIES = [
 export const TONES = { ops: '#DCC8FF', outreach: '#B57CFF', creative: '#F5F0FA', tech: '#A57BEA', comp: '#C9A2FF' };
 
 /* Teams featured in "A few of our teams" (by slug) */
-export const FEATURED = ['ui-ux', 'media', 'tech-operations', 'ai-data'];
+export const FEATURED = ['web-dev', 'ui-ux', 'tech-operations', 'ai-data'];
 
 /* The code printed on each roster panel and behind the portrait. */
 const CODES = {
@@ -148,11 +148,3 @@ export const catForGroupKey = (key) => {
   const c = CATEGORIES.find((x) => x.groups.includes(key));
   return c ? c.id : 'all';
 };
-
-export const MAX = { ed: 1, d: 1, dd: 1, all: 1 };
-TEAMS.forEach((t) => {
-  MAX.ed = Math.max(MAX.ed, byRole(t, 'Executive Director').length);
-  MAX.d = Math.max(MAX.d, byRole(t, 'Director').length);
-  MAX.dd = Math.max(MAX.dd, byRole(t, 'Deputy Director').length);
-  MAX.all = Math.max(MAX.all, t.leads.length);
-});

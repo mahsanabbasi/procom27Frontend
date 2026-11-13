@@ -36,6 +36,7 @@ export const LIVE = {
   schedule: true,
   about: true,
   aboutUs: true,
+  whyAttend: true,
 };
 
 export const href = (key) => ROUTES[key] || '#';

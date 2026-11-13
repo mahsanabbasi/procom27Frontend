@@ -3,13 +3,14 @@ import Icon from './Icon.jsx';
 import { sfx } from '../../utils/arcade/sfx.js';
 import { toast } from '../../utils/arcade/toast.js';
 import { pad, retrigger } from '../../utils/arcade/util.js';
-import { QUESTS, frac, getState, has, munchCount, registerHud, resetXP, secGot, subscribeXP } from '../../utils/arcade/xp.js';
+import { QUESTS, frac, getState, has, munchCount, registerHud, resetXP, secGot, subscribeLvPop, subscribeXP } from '../../utils/arcade/xp.js';
 
 /** XP HUD (bottom-left) + quest log panel */
 export default function XPHud() {
   const [s, setS] = useState(getState);
   const [open, setOpen] = useState(false);
   const [sound, setSound] = useState(sfx.on);
+  const [lvText, setLvText] = useState(null);
   const rootRef = useRef(null);
   const btnRef = useRef(null);
   const closeRef = useRef(null);
@@ -20,10 +21,19 @@ export default function XPHud() {
       setS(next);
       if (next.bump) retrigger(rootRef.current, 'bump');
     });
+    let lvT;
+    const unsubPop = subscribeLvPop((text) => {
+      setLvText(text);
+      rootRef.current.classList.add('is-lvup');
+      clearTimeout(lvT);
+      lvT = setTimeout(() => rootRef.current && rootRef.current.classList.remove('is-lvup'), 2600);
+    });
     const onSfx = () => setSound(sfx.on);
     document.addEventListener('procom:sfx', onSfx);
     return () => {
       unsub();
+      unsubPop();
+      clearTimeout(lvT);
       registerHud(null);
       document.removeEventListener('procom:sfx', onSfx);
     };
@@ -130,6 +140,11 @@ export default function XPHud() {
           </button>
         </div>
       </div>
+      {lvText !== null && (
+        <span className="xp__lvup" role="status">
+          {lvText}
+        </span>
+      )}
     </div>
   );
 }

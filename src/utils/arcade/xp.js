@@ -2,10 +2,8 @@
    XP + QUEST LOG — points for exploring. Saved on this device, shared
    across every PROCOM page. Award with quest('id', element).
    ===================================================================== */
-import { createElement } from 'react';
 import { burst } from './burst.js';
 import { sfx } from './sfx.js';
-import { toast } from './toast.js';
 import { MOTION, pad } from './util.js';
 
 const KEY = 'procom27-xp';
@@ -25,6 +23,7 @@ export const QUESTS = [
   { id: 'boss', label: 'Defeat the final boss on Why Attend', pts: 60 },
   { id: 'team', label: 'Pick a team on the Teams page', pts: 40 },
   { id: 'party', label: 'Climb to the top rank on the Teams page', pts: 25 },
+  { id: 'excom', label: 'Open the President’s panel on the Teams page', pts: 20 },
   { id: 'over', label: 'Reach the GAME OVER screen', pts: 40 },
   { id: 'runner', label: 'Play Bit Runner in the footer', pts: 50 },
   { id: 'champ', label: 'Take the Bit Runner champion spot', pts: 100 },
@@ -82,6 +81,18 @@ export function getState() {
 function emit(bump) {
   listeners.forEach((fn) => fn({ ...getState(), bump }));
   document.dispatchEvent(new CustomEvent('procom:xp', { detail: getState() }));
+}
+
+/* level-ups pop a small badge on the HUD instead of a toast over the content */
+const popListeners = new Set();
+export function subscribeLvPop(fn) {
+  popListeners.add(fn);
+  return () => popListeners.delete(fn);
+}
+/** show the HUD badge: a level number, or 'end' for "Level complete" */
+export function lvPop(level) {
+  const text = level === 'end' ? 'Level complete' : 'Level up · LV ' + pad(level);
+  popListeners.forEach((fn) => fn(text));
 }
 
 export function subscribeXP(fn) {
@@ -142,7 +153,7 @@ export function award(id, pts, at) {
   const after = lvl(st.xp);
   if (after > before) {
     setTimeout(() => {
-      toast(createElement('span', null, 'Level up! You reached ', createElement('code', null, 'LV ' + pad(after))));
+      lvPop(after);
       if (hudBtn) {
         const r = hudBtn.getBoundingClientRect();
         burst(r.left + r.width / 2, r.top, { n: 24, spread: 110 });

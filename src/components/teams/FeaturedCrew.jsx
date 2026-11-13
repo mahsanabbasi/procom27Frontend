@@ -7,14 +7,14 @@ import { pad } from '../../utils/arcade/util.js';
 
 const CREW = FEATURED.map((s) => TEAMS.find((t) => t.slug === s)).filter(Boolean);
 
-/** 04 — Featured teams */
+/** 03 — Featured teams */
 export default function FeaturedCrew({ onView, onShow }) {
   return (
     <section className="section" id="crew" aria-labelledby="crew-title" data-munch="trophy" data-munch-label="Featured teams">
       <div className="shell">
         <Reveal as="header" className="sh">
           <div>
-            <SectionLabel text="04 / Featured teams" />
+            <SectionLabel text="03 / Featured teams" />
             <h2 className="sh__title t-d2" id="crew-title">
               <span className="ln" style={{ '--l': 0 }}>
                 <span>A few of</span>
@@ -59,7 +59,7 @@ export default function FeaturedCrew({ onView, onShow }) {
                       <Icon name="arrow" />
                     </button>
                     <button className="link-action" type="button" onClick={() => onShow(t)}>
-                      Show on select screen
+                      Show on the ring
                     </button>
                   </div>
                 </div>

@@ -25,16 +25,16 @@ html.pd-page{scroll-padding-top:calc(var(--nav-h) + 48px)}
 /* Muncher — walks along the nav's bottom edge, leaving a glowing trail */
 .pd .munch{position:absolute;left:0;right:0;bottom:-6px;height:11px;z-index:2;pointer-events:none}
 .pd .munch__track{position:absolute;top:0;bottom:0;left:max(16px,calc((100% - var(--container)) / 2));right:max(16px,calc((100% - var(--container)) / 2))}
-.pd .munch__line{position:absolute;left:0;top:5px;height:1px;width:0;background:linear-gradient(90deg,rgba(181,124,255,0),var(--c-primary) 70%,var(--c-primary-bright));box-shadow:0 0 6px rgba(181,124,255,.75)}
+.pd .munch__line{position:absolute;left:0;top:5px;height:1px;width:0;background:linear-gradient(90deg,rgba(181,124,255,0),var(--c-primary) 70%,var(--c-primary-bright));box-shadow:none}
 .pd .munch__dots{position:absolute;inset:0}
 .pd .munch__seg{position:absolute;top:4px;width:3px;height:3px;background:rgba(181,124,255,.45);transition:opacity .25s,transform .25s}
 .pd .munch__seg.is-eaten{opacity:0;transform:scale(0)}
-.pd .munch__item{position:absolute;top:2px;width:7px;height:7px;margin-left:-2px;border-radius:50%;background:var(--c-primary-bright);box-shadow:0 0 8px rgba(220,200,255,.85);transition:opacity .35s,transform .35s var(--ease);animation:pd-pellet 1.6s ease-in-out infinite}
-@keyframes pd-pellet{50%{transform:scale(.55);box-shadow:0 0 3px rgba(220,200,255,.4)}}
+.pd .munch__item{position:absolute;top:2px;width:7px;height:7px;margin-left:-2px;border-radius:50%;background:var(--c-primary-bright);box-shadow:none;transition:opacity .35s,transform .35s var(--ease);animation:pd-pellet 1.6s ease-in-out infinite}
+@keyframes pd-pellet{50%{transform:scale(.55);box-shadow:none}}
 .pd .munch__item.is-eaten{opacity:0;transform:scale(2.4);animation:none}
 @media (max-width:600px){.pd .munch__item{width:5px;height:5px;top:3px;margin-left:-1px}
 .pd .munch__seg{width:2px;height:2px}}
-.pd .munch__bot{position:absolute;left:0;top:-2px;width:15px;height:14px;margin-left:-6px;z-index:2;will-change:transform;filter:drop-shadow(0 0 4px rgba(181,124,255,.75))}
+.pd .munch__bot{position:absolute;left:0;top:-2px;width:15px;height:14px;margin-left:-6px;z-index:2;will-change:transform;filter:none}
 .pd .munch__bot svg{position:absolute;inset:0;width:100%;height:100%}
 .pd .munch__bot .m-o{visibility:hidden}
 .pd .munch__bot.is-moving .m-o{animation:pd-chompO .22s steps(1) infinite}
@@ -52,7 +52,7 @@ html.pd-page{scroll-padding-top:calc(var(--nav-h) + 48px)}
 .pd .xp__bar i{position:absolute;left:0;top:0;bottom:0;width:calc(var(--p,0) * 100%);background:var(--c-primary);-webkit-mask:repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 6px);mask:repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 6px);transition:width .6s steps(6)}
 .pd .xp__pts{font:400 8px/1 var(--f-display);color:var(--c-text-2);min-width:48px}
 .pd .xp.bump .xp__btn{animation:pd-xpBump .45s steps(3)}
-@keyframes pd-xpBump{40%{transform:translateY(-5px);border-color:var(--c-primary-bright);box-shadow:0 9px 0 var(--c-border),0 0 18px rgba(181,124,255,.6)}}
+@keyframes pd-xpBump{40%{transform:translateY(-5px);border-color:var(--c-primary-bright);box-shadow:0 9px 0 var(--c-border)}}
 .pd .xp__panel{position:absolute;left:0;bottom:calc(100% + 12px);width:min(360px,calc(100vw - 32px));max-height:min(72vh,560px);overflow:auto;background:var(--c-card);border:var(--bw) solid var(--c-primary);box-shadow:0 6px 0 var(--c-border),0 20px 50px rgba(0,0,0,.6);padding:16px 18px 18px;animation:pd-swapIn .3s var(--ease)}
 .pd .xp__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .pd .xp__head .t-label{color:var(--c-primary)}
@@ -79,7 +79,7 @@ html.pd-page{scroll-padding-top:calc(var(--nav-h) + 48px)}
 .pd .is-press{transition:none!important}
 .pd .bulbs{display:flex;justify-content:space-between;gap:4px}
 .pd .bulbs i{width:7px;height:7px;background:var(--c-border);animation:pd-bulb 1.2s steps(1) infinite;animation-delay:calc(var(--n,0) * -100ms)}
-@keyframes pd-bulb{0%,49%{background:var(--c-primary-bright);box-shadow:0 0 8px var(--c-primary)}50%,100%{background:var(--c-border);box-shadow:none}}
+@keyframes pd-bulb{0%,49%{background:var(--c-primary-bright);box-shadow:none}50%,100%{background:var(--c-border);box-shadow:none}}
 .pd .row-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:var(--s-2);margin-bottom:var(--s-5)}
 .pd .row-head h2{margin:0 0 var(--s-1)}
 .pd .row-head p{margin:0}

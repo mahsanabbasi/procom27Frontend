@@ -366,7 +366,7 @@ html.pd-page body::before{content:"";position:fixed;inset:0 0 auto;height:env(sa
 .pd .scan::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(220,200,255,.035) 0 1px,transparent 1px 4px)}
 .pd .grid-bg{background-image:linear-gradient(rgba(73,52,96,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(73,52,96,.22) 1px,transparent 1px);background-size:48px 48px}
 .pd .p1-tag{position:absolute;left:-1px;top:-1px;z-index:3;background:var(--c-primary);color:var(--c-bg);font:400 7px/1 var(--f-display);padding:5px 7px;letter-spacing:.06em}
-.pd .glow-soft{background:radial-gradient(closest-side,rgba(181,124,255,.22),transparent)}
+.pd .glow-soft{background:transparent}
 .pd .blink{animation:pd-blink 1.2s steps(2) 4}
 @keyframes pd-blink{50%{opacity:0}}
 /* ---------- 13. MOTION UTILITIES ---------- *//* Reveal: add data-reveal (optionally ="left" | "scale" | "fade"); JS adds .is-in */
