@@ -12,12 +12,12 @@ import { RegisterBand } from './components/RegisterBand.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
-import { getTeamBySlug } from './data/teams.js';
 
 const WhyAttendPage = lazy(() => import('./components/whyAttend/WhyAttendPage.jsx'));
 const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
-const TeamsPage = lazy(() => import('./components/TeamsPage.jsx'));
-const TeamDetailPage = lazy(() => import('./components/TeamDetailPage.jsx'));
+// The Teams page brings its own arcade nav and footer (see components/arcade),
+// so it renders outside MainLayout.
+const TeamsPage = lazy(() => import('./components/teams/TeamsPage.jsx'));
 
 // Sections arrive as they enter the viewport, once. Content is visible without
 // script: the hidden state only applies under html.js.
@@ -126,9 +126,6 @@ function MainLayout() {
   const isWhyAttend = /^\/why-attend\/?$/.test(location);
   const PageContainer = isWhyAttend ? 'div' : 'main';
   const isAboutPage = location === '/about' || location === '/about/';
-  const isTeamsIndex = location === '/teams' || location === '/teams/';
-  const teamMatch = location.match(/^\/teams\/([^/]+)/);
-  const teamSlug = teamMatch ? decodeURIComponent(teamMatch[1]) : null;
 
   useEffect(() => {
     if (isWhyAttend) {
@@ -197,10 +194,6 @@ function MainLayout() {
                 <Route path="/" component={HomePage} />
                 <Route path="/why-attend" component={WhyAttendPage} />
                 <Route path="/about" component={AboutPage} />
-                <Route path="/teams" component={TeamsPage} />
-                <Route path="/teams/:slug">
-                  {(params) => <TeamDetailPage slug={decodeURIComponent(params.slug)} />}
-                </Route>
                 <Route component={HomePage} />
               </Switch>
             </Suspense>
@@ -219,7 +212,19 @@ export default function App() {
   return (
     <ErrorBoundary>
       <Router>
-        <MainLayout />
+        <Switch>
+          {/* one route, so the select screen stays mounted while a team's detail view opens */}
+          <Route path="/teams/:slug?">
+            <ErrorBoundary>
+              <Suspense fallback={<RetroLoader />}>
+                <TeamsPage />
+              </Suspense>
+            </ErrorBoundary>
+          </Route>
+          <Route>
+            <MainLayout />
+          </Route>
+        </Switch>
       </Router>
     </ErrorBoundary>
   );
