@@ -132,15 +132,10 @@ function MainLayout() {
       document.title = 'Why Attend PROCOM’27 — Where Skill Meets Scale';
     } else if (isAboutPage) {
       document.title = "About Us | PROCOM'27";
-    } else if (isTeamsIndex) {
-      document.title = "Teams | PROCOM'27";
-    } else if (teamSlug) {
-      const team = getTeamBySlug(teamSlug);
-      document.title = team ? `${team.name} team | PROCOM'27` : `Team not found | PROCOM'27`;
     } else {
       document.title = "PROCOM'27 | FAST NUCES Karachi";
     }
-  }, [isWhyAttend, isAboutPage, isTeamsIndex, teamSlug]);
+  }, [isWhyAttend, isAboutPage]);
 
   useEntrances(location);
 

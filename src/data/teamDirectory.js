@@ -148,11 +148,3 @@ export const catForGroupKey = (key) => {
   const c = CATEGORIES.find((x) => x.groups.includes(key));
   return c ? c.id : 'all';
 };
-
-export const MAX = { ed: 1, d: 1, dd: 1, all: 1 };
-TEAMS.forEach((t) => {
-  MAX.ed = Math.max(MAX.ed, byRole(t, 'Executive Director').length);
-  MAX.d = Math.max(MAX.d, byRole(t, 'Director').length);
-  MAX.dd = Math.max(MAX.dd, byRole(t, 'Deputy Director').length);
-  MAX.all = Math.max(MAX.all, t.leads.length);
-});

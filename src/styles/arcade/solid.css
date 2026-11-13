@@ -1,0 +1,52 @@
+/* =====================================================================
+   SOLID PASS — shared by every page, loaded last.
+   Flat, strong surfaces instead of glass and glow: solid purple and
+   grey fills, 2px borders and hard offset shadows (print / arcade
+   sticker style). Game screens keep their light; nothing else glows.
+   ===================================================================== */
+.pd,.xpf{
+  --glow:0 0 0 2px var(--c-primary);
+  --c-plum:#140C22;        /* deep purple surface */
+  --c-plum-2:#1E1231;      /* raised purple surface */
+  --c-grape:#3C2B52;       /* strong purple-grey line / fill */
+  --c-violet:#5A2FA0;      /* strong brand purple (Instagram posts) */
+  --c-ink:#000;
+  --hard:4px 4px 0 #000;
+  --hard-p:4px 4px 0 var(--c-primary);
+}
+.pd *,.pd *::before,.pd *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.pd .nav{background:#07060B!important;border-bottom:2px solid var(--c-grape)!important}
+html.pd-page body::before{background:#07060B}
+/* sections: solid alternating bands, no haze */
+.pd .section--alt{background:var(--c-plum);border-block:2px solid var(--c-grape)}
+/* buttons: solid fills, hard shadow, press-in */
+.pd .btn{transition:transform .08s steps(2),box-shadow .08s steps(2),background .12s,color .12s,border-color .12s}
+.pd .btn--primary,.pd .btn--arcade{box-shadow:var(--hard)}
+.pd .btn--primary:hover,.pd .btn--arcade:hover{background:var(--c-primary-bright);border-color:var(--c-primary-bright);transform:translate(-2px,-2px);box-shadow:6px 6px 0 #000}
+.pd .btn--primary:active,.pd .btn--arcade:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+.pd .btn--secondary{background:var(--c-plum-2);border-color:var(--c-grape)}
+.pd .btn--secondary:hover{background:var(--c-grape);border-color:var(--c-primary);color:var(--c-text)}
+.pd .btn--card:hover{background:var(--c-grape)}
+.pd .btn--register{box-shadow:var(--hard)}
+.pd .icon-btn:hover{background:var(--c-grape)}
+/* cards and panels: solid, lift with a hard purple shadow instead of glow */
+.pd .card,.pd .panel{background:var(--c-plum)}
+.pd .card--interactive:hover{transform:translate(-3px,-3px);box-shadow:var(--hard-p);border-color:var(--c-primary)}
+.pd .card.is-selected,.pd .card[aria-current="true"],.pd .card[aria-pressed="true"]{background:var(--c-plum-2);border-color:var(--c-primary);box-shadow:var(--hard-p)}
+.pd .tag{background:var(--c-plum-2)}
+.pd .tag--accent{background:var(--c-violet);border-color:var(--c-violet);color:var(--c-text)}
+.pd .key{background:var(--c-plum-2)}
+/* toast + XP HUD: solid, out of the way on phones */
+.pd .toast{background:var(--c-plum-2)!important;border:2px solid var(--c-primary)!important;box-shadow:var(--hard)!important}
+.pd .xp__btn{background:var(--c-plum-2);box-shadow:3px 3px 0 #000}
+.pd .xp__lvup{position:absolute;left:0;bottom:calc(100% + 8px);padding:6px 9px;font:400 8px/1 var(--f-display);text-transform:uppercase;white-space:nowrap;color:var(--c-bg);background:var(--c-primary);box-shadow:3px 3px 0 #000;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .2s steps(2),transform .2s steps(2)}
+.pd .xp.is-lvup .xp__lvup{opacity:1;transform:none}
+@media (max-width:600px){.pd .xp__btn{padding:7px 9px;gap:7px}
+.pd .xp__bar{width:32px}
+.pd .toast{max-width:calc(100% - 24px);font-size:14px}}
+/* readable focus everywhere */
+.pd :focus-visible{outline:2px solid var(--c-primary-bright);outline-offset:3px}
+/* type: keep long section titles from crowding on phones */
+@media (max-width:600px){.pd .sh__title,.pd .t-d2{font-size:clamp(19px,5.6vw,24px);line-height:1.35}
+.pd .sh__desc,.pd .t-body-lg{font-size:16px}
+.pd .section{padding-block:clamp(56px,14vw,72px)}}

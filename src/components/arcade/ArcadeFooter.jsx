@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import BrandMark from './BrandMark.jsx';
 import Icon from './Icon.jsx';
 import RouteLink from './RouteLink.jsx';
-import BitRunner from './BitRunner.jsx';
 import { CONTACT, SOCIAL } from '../../data/procomEvent.js';
 import { COMPETITION_TEAMS, teamPath } from '../../data/teams.js';
 import { href } from '../../utils/arcade/routes.js';
@@ -90,7 +89,6 @@ export default function ArcadeFooter({ page = '' }) {
   return (
     <footer className="footer">
       <div className="shell">
-        <BitRunner />
         <div className="footer__grid footer__grid--4">
           <div>
             <RouteLink to="home" className="brand" aria-label="PROCOM’27 home">

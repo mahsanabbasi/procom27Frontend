@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { burstAt } from '../../utils/arcade/burst.js';
-import { toast } from '../../utils/arcade/toast.js';
+import { lvPop } from '../../utils/arcade/xp.js';
 import { MOTION } from '../../utils/arcade/util.js';
 
 /** 1UP: back-to-top with level (scroll) progress */
@@ -17,7 +17,7 @@ export default function OneUp() {
       setOn(window.scrollY > window.innerHeight * 0.8);
       if (p >= 99 && !done) {
         done = true;
-        toast('Level complete — you reached the end of the page.');
+        lvPop('end');
       }
     };
     window.addEventListener('scroll', upd, { passive: true });

@@ -16,4 +16,5 @@
 @import "./kit.css";
 @import "./arcade.css";
 @import "./teams.css";
+@import "./solid.css"; /* the design's "solid pass": flat fills and hard shadows, loaded after everything else */
 @import "./scope.css";
