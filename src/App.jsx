@@ -13,6 +13,7 @@ import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 
+const WhyAttendPage = lazy(() => import('./components/whyAttend/WhyAttendPage.jsx'));
 const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
 // The Teams page brings its own arcade nav and footer (see components/arcade),
 // so it renders outside MainLayout.
@@ -122,11 +123,24 @@ function MainLayout() {
   const [location] = useLocation();
   const [contactOpen, setContactOpen] = useState(false);
 
+  const isWhyAttend = /^\/why-attend\/?$/.test(location);
+  const PageContainer = isWhyAttend ? 'div' : 'main';
   const isAboutPage = location === '/about' || location === '/about/';
 
   useEffect(() => {
-    document.title = isAboutPage ? "About Us | PROCOM'27" : "PROCOM'27 | FAST NUCES Karachi";
-  }, [isAboutPage]);
+    if (isWhyAttend) {
+      document.title = 'Why Attend PROCOM’27 — Where Skill Meets Scale';
+    } else if (isAboutPage) {
+      document.title = "About Us | PROCOM'27";
+    } else if (isTeamsIndex) {
+      document.title = "Teams | PROCOM'27";
+    } else if (teamSlug) {
+      const team = getTeamBySlug(teamSlug);
+      document.title = team ? `${team.name} team | PROCOM'27` : `Team not found | PROCOM'27`;
+    } else {
+      document.title = "PROCOM'27 | FAST NUCES Karachi";
+    }
+  }, [isWhyAttend, isAboutPage, isTeamsIndex, teamSlug]);
 
   useEntrances(location);
 
@@ -159,7 +173,7 @@ function MainLayout() {
 
   return (
     <>
-      <Starfield />
+      {!isWhyAttend && <Starfield />}
 
       <div
         id={location !== '/' ? 'top' : undefined}
@@ -171,21 +185,22 @@ function MainLayout() {
           flexDirection: 'column',
         }}
       >
-        <Navbar currentPath={location} />
+        {!isWhyAttend && <Navbar currentPath={location} />}
 
-        <main style={{ flex: 1 }}>
+        <PageContainer style={{ flex: 1 }}>
           <ErrorBoundary>
             <Suspense fallback={<RetroLoader />}>
               <Switch>
                 <Route path="/" component={HomePage} />
+                <Route path="/why-attend" component={WhyAttendPage} />
                 <Route path="/about" component={AboutPage} />
                 <Route component={HomePage} />
               </Switch>
             </Suspense>
           </ErrorBoundary>
-        </main>
+        </PageContainer>
 
-        <Footer onContactClick={() => setContactOpen(true)} />
+        {!isWhyAttend && <Footer onContactClick={() => setContactOpen(true)} />}
       </div>
 
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
