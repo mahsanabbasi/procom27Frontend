@@ -1,0 +1,19 @@
+/* PROCOM’27 arcade design system — ported 1:1 from the Teams design file.
+   Every rule is scoped under `.pd` (the page wrapper), and every keyframe is
+   prefixed `pd-`, so none of it can affect the rest of the site. */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/inter/800.css";
+@import "@fontsource/pixelify-sans/400.css";
+@import "@fontsource/pixelify-sans/500.css";
+@import "@fontsource/pixelify-sans/600.css";
+@import "@fontsource/pixelify-sans/700.css";
+/* Press Start 2P is already self-hosted by the site (public/fonts/fonts.css) */
+
+@import "./procom.css";
+@import "./kit.css";
+@import "./arcade.css";
+@import "./teams.css";
+@import "./scope.css";

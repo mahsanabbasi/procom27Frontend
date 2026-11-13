@@ -12,11 +12,11 @@ import { RegisterBand } from './components/RegisterBand.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
-import { getTeamBySlug } from './data/teams.js';
 
 const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
-const TeamsPage = lazy(() => import('./components/TeamsPage.jsx'));
-const TeamDetailPage = lazy(() => import('./components/TeamDetailPage.jsx'));
+// The Teams page brings its own arcade nav and footer (see components/arcade),
+// so it renders outside MainLayout.
+const TeamsPage = lazy(() => import('./components/teams/TeamsPage.jsx'));
 
 // Sections arrive as they enter the viewport, once. Content is visible without
 // script: the hidden state only applies under html.js.
@@ -123,22 +123,10 @@ function MainLayout() {
   const [contactOpen, setContactOpen] = useState(false);
 
   const isAboutPage = location === '/about' || location === '/about/';
-  const isTeamsIndex = location === '/teams' || location === '/teams/';
-  const teamMatch = location.match(/^\/teams\/([^/]+)/);
-  const teamSlug = teamMatch ? decodeURIComponent(teamMatch[1]) : null;
 
   useEffect(() => {
-    if (isAboutPage) {
-      document.title = "About Us | PROCOM'27";
-    } else if (isTeamsIndex) {
-      document.title = "Teams | PROCOM'27";
-    } else if (teamSlug) {
-      const team = getTeamBySlug(teamSlug);
-      document.title = team ? `${team.name} team | PROCOM'27` : `Team not found | PROCOM'27`;
-    } else {
-      document.title = "PROCOM'27 | FAST NUCES Karachi";
-    }
-  }, [isAboutPage, isTeamsIndex, teamSlug]);
+    document.title = isAboutPage ? "About Us | PROCOM'27" : "PROCOM'27 | FAST NUCES Karachi";
+  }, [isAboutPage]);
 
   useEntrances(location);
 
@@ -191,10 +179,6 @@ function MainLayout() {
               <Switch>
                 <Route path="/" component={HomePage} />
                 <Route path="/about" component={AboutPage} />
-                <Route path="/teams" component={TeamsPage} />
-                <Route path="/teams/:slug">
-                  {(params) => <TeamDetailPage slug={decodeURIComponent(params.slug)} />}
-                </Route>
                 <Route component={HomePage} />
               </Switch>
             </Suspense>
@@ -213,7 +197,19 @@ export default function App() {
   return (
     <ErrorBoundary>
       <Router>
-        <MainLayout />
+        <Switch>
+          {/* one route, so the select screen stays mounted while a team's detail view opens */}
+          <Route path="/teams/:slug?">
+            <ErrorBoundary>
+              <Suspense fallback={<RetroLoader />}>
+                <TeamsPage />
+              </Suspense>
+            </ErrorBoundary>
+          </Route>
+          <Route>
+            <MainLayout />
+          </Route>
+        </Switch>
       </Router>
     </ErrorBoundary>
   );
