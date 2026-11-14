@@ -1071,6 +1071,12 @@ body:has(.app-home-route) .initialization-atmosphere { display: none !important;
 @media (max-width:1000px){.home-page #why .fleet{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:34px}}
 @media (max-width:900px){.home-page #why .sh{grid-template-columns:1fr}}
 @media (max-width:520px){.home-page #why .fleet{grid-template-columns:1fr;row-gap:30px}.home-page #why .shoot__field{padding:24px 14px 120px}.home-page #why .tgt{padding-top:32px}}
+@media (prefers-reduced-motion:reduce){
+  .home-page #why .tgt,.home-page #why .tgt::before,.home-page #why .tgt::after,
+  .home-page #why .tgt.is-hit,.home-page #why .tgt.is-boom,.home-page #why .tgt.is-warp,
+  .home-page #why .tgt__alien .a2,.home-page #why .tgt:is(:hover,:focus-visible,.is-locked) .tgt__lock,
+  .home-page #why .shoot__ins,.home-page #why .shoot__toast{animation:none!important;transition:none!important}
+}
 @media (max-width:600px){
   .home-page #why .sh__title,.home-page #why .t-d2{font-size:clamp(19px,5.6vw,24px);line-height:1.35}
   .home-page #why .sh__desc,.home-page #why .t-body-lg{font-size:16px}

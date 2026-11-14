@@ -159,27 +159,26 @@ export default function WhyAttendSection() {
       bullets.push({ x: ship.x, y: ship.y - 8, target: target || null });
       playSound('jump');
     };
-    const showDemoToast = (href) => {
-      setToast(`This page isn’t in the demo yet. Planned route: ${href}`);
+    const showTargetToast = (href) => {
+      setToast(href);
       later(() => setToast(''), 3600);
     };
     const resolveTarget = (target) => {
       target.dataset.hits = '0';
       target.classList.remove('is-locked', 'is-hit');
       const href = target.getAttribute('href');
-      if (target.hasAttribute('data-demo')) {
-        showDemoToast(href);
-        later(() => {
-          target.classList.remove('is-boom');
-          if (motionEnabled) {
-            target.classList.add('is-warp');
-            later(() => target.classList.remove('is-warp'), 520);
-          }
-          busy = false;
-        }, motionEnabled ? 500 : 0);
-      } else {
+      if (!motionEnabled) {
         navigate(href);
+        return;
       }
+      // Keep the reference's toast and warp reveal before changing routes.
+      showTargetToast(href);
+      target.classList.remove('is-boom');
+      target.classList.add('is-warp');
+      later(() => {
+        target.classList.remove('is-warp');
+        navigate(href);
+      }, 500);
     };
     const explode = (target) => {
       const rect = relativeRect(target);
@@ -197,7 +196,7 @@ export default function WhyAttendSection() {
       target.classList.add('is-boom');
       playSound('miss');
       updateScore(1000);
-      later(() => resolveTarget(target), 620);
+      later(() => resolveTarget(target), motionEnabled ? 620 : 0);
     };
     const hit = (target) => {
       if (target.classList.contains('is-boom')) return;

@@ -14,7 +14,7 @@ export const homeWhyAttendContent = {
   targets: [
     {
       id: 'competitions',
-      href: 'competitions.html',
+      href: '/competitions',
       alien: 0,
       number: '01',
       icon: 'trophy',
@@ -25,7 +25,6 @@ export const homeWhyAttendContent = {
     {
       id: 'sponsors',
       href: '/sponsors',
-      demo: true,
       alien: 1,
       number: '02',
       icon: 'users',
@@ -36,7 +35,6 @@ export const homeWhyAttendContent = {
     {
       id: 'job-orbit',
       href: '/job-orbit',
-      demo: true,
       alien: 2,
       number: '03',
       icon: 'flag',
@@ -47,7 +45,6 @@ export const homeWhyAttendContent = {
     {
       id: 'workshops',
       href: '/workshops',
-      demo: true,
       alien: 3,
       number: '04',
       icon: 'ticket',
@@ -57,3 +54,5 @@ export const homeWhyAttendContent = {
     },
   ],
 };
+
+// /job-orbit and /workshops are placeholder routes until those pages exist.
