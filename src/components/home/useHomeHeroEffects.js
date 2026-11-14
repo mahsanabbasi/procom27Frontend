@@ -520,7 +520,8 @@ export function useHomeHeroEffects() {
 
     function restoreHeadline() {
       screen.querySelectorAll('[data-decode]').forEach((element) => {
-        const finalText = element.getAttribute('data-decode-text') || '';
+        // aria-label retains the row text while the decode effect replaces its contents.
+        const finalText = element.getAttribute('aria-label') || element.textContent;
         element.textContent = finalText;
         element.setAttribute('aria-label', finalText);
         element.style.removeProperty('min-height');

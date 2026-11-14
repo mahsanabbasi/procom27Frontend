@@ -2,7 +2,8 @@
 export const homeHeroContent = {
   eventDates: '26–28 Feb 2027',
   campus: 'FAST-NUCES Karachi',
-  title: ['Compete.', 'Connect.', 'Create', 'what’s next.'],
+  // Keep the row breaks aligned with the final hero design.
+  title: ['Where', 'skill meets', 'scale.'],
   description:
     'Put your skills to the test, meet people who share your interests, and explore opportunities across technology, business, and beyond at PROCOM ’27.',
   stats: [

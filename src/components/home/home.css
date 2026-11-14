@@ -283,7 +283,7 @@ body:has(.app-home-route) .initialization-atmosphere { display: none !important;
 .home-page .scr{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(16px,3cqi,40px);align-items:center;padding:clamp(16px,2.6cqi,36px) clamp(18px,3.6cqi,48px) clamp(18px,2.6cqi,32px)}
 .home-page .scr .hero__id{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:0 0 clamp(12px,1.8cqi,22px);color:var(--c-primary);font-size:clamp(8px,1.05cqi,10px)}
 .home-page .scr .hero__id .sep{color:var(--c-border)}
-.home-page .scr h1{font-size:clamp(20px,3.5cqi,40px);margin:0 0 clamp(12px,1.8cqi,22px)}
+.home-page .scr h1{font-size:clamp(20px,3.5cqi,40px);margin:0 0 clamp(12px,1.8cqi,22px);color:var(--c-text)}
 .home-page .scr h1 .row{display:block}
 .home-page .scr .t-body-lg{color:var(--c-text);max-width:32em;margin:0 0 clamp(16px,2.2cqi,26px);font-size:clamp(15px,1.55cqi,17px)}
 .home-page .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-1);margin-top:clamp(14px,2.2cqi,26px);max-width:580px}

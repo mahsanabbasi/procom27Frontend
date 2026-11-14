@@ -1,4 +1,5 @@
 // Renders the reference Home hero inside its handheld-console shell.
+import { useEffect } from 'react';
 import { Link } from 'wouter';
 import { homeHeroContent } from '../../data/homeHero.js';
 import { useHomeHeroEffects } from './useHomeHeroEffects.js';
@@ -28,6 +29,14 @@ function CategoryTicker() {
 }
 
 export default function HomeHero() {
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = 'PROCOM’27 — Where skill meets scale.';
+    return () => {
+      document.title = previousTitle;
+    };
+  }, []);
+
   const {
     consoleRef,
     screenRef,
@@ -159,12 +168,12 @@ export default function HomeHero() {
                         <span className="sep">•</span>
                         <span id="heroCampus">{homeHeroContent.campus}</span>
                       </p>
-                      <h1 className="t-d1 t-extrude" id="hero-title" aria-label="Compete. Connect. Create what’s next.">
-                        {homeHeroContent.title.map((line, index) => (
+                      <p className="hero__start t-label scr-in" style={{ '--i': 1 }}>Game start</p>
+                      <h1 className="t-d1 t-extrude" id="hero-title" aria-label="Where skill meets scale.">
+                        {homeHeroContent.title.map((line) => (
                           <span
-                            className={`row${index > 1 ? ' t-soft' : ''}`}
+                            className="row"
                             data-decode
-                            data-decode-text={line}
                             aria-hidden="true"
                             key={line}
                           >
