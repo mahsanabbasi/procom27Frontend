@@ -11,7 +11,6 @@ import GameOver from './GameOver.jsx';
 import HomeFooter from './HomeFooter.jsx';
 import RegistrationCalloutSection from './RegistrationCalloutSection.jsx';
 import HomeCompetitionCategoriesSection from './HomeCompetitionCategoriesSection.jsx';
-import FeaturedCompetitionsSection from './FeaturedCompetitionsSection.jsx';
 import { ensureHomeFontsReady } from './homeFonts.js';
 
 export default function HomePage({ onContactClick }) {
@@ -31,12 +30,11 @@ export default function HomePage({ onContactClick }) {
     <div className={`home-page${fontsReady ? ' home-fonts-ready' : ''}`}>
       <HomeHeader onContactClick={onContactClick} />
       <HomeHero />
-      <RegistrationCalloutSection />
       <HomeCompetitionCategoriesSection />
-      <FeaturedCompetitionsSection />
       <WhyAttendSection />
       <HomeTeamsSection />
       <HomeScheduleSection />
+      <RegistrationCalloutSection />
       <MoreAtProcomSection />
       <GameOver />
       <HomeFooter />
