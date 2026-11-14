@@ -7,7 +7,7 @@ import WhyAttendSection from './WhyAttendSection.jsx';
 import HomeTeamsSection from './HomeTeamsSection.jsx';
 import HomeScheduleSection from './HomeScheduleSection.jsx';
 import MoreAtProcomSection from './MoreAtProcomSection.jsx';
-import GameOverSection from './GameOverSection.jsx';
+import GameOver from './GameOver.jsx';
 import HomeFooter from './HomeFooter.jsx';
 import RegistrationCalloutSection from './RegistrationCalloutSection.jsx';
 import HomeCompetitionCategoriesSection from './HomeCompetitionCategoriesSection.jsx';
@@ -38,7 +38,7 @@ export default function HomePage({ onContactClick }) {
       <HomeTeamsSection />
       <HomeScheduleSection />
       <MoreAtProcomSection />
-      <GameOverSection />
+      <GameOver />
       <HomeFooter />
     </div>
   );
