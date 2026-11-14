@@ -1,0 +1,697 @@
+/* =====================================================================
+   PROCOM’27 — SHARED EVENT DATA (one source for every page)
+   ✏️  Edit here. Home, Competitions, Event Detail and Schedule all read this,
+   so names, dates, times, venues and team sizes can never disagree.
+
+   DEMO = true  → every value below marked (demo) is PROPOSED SAMPLE CONTENT,
+                  not confirmed by the organizers. A notice is shown on each page.
+   null         → shown on the site as a clearly marked [placeholder].
+   ===================================================================== */
+const data = {
+  DEMO: true,
+
+  event: {
+    dates: "26–28 Feb 2027", // (demo — date style taken from the Figma components)
+    campus: "FAST-NUCES Karachi", // (demo)
+    timezone: "PKT (UTC+5)", // (demo)
+    utcOffset: "+05:00",
+    ianaZone: "Asia/Karachi", // used to show times in the event’s timezone
+    days: 3,
+  },
+
+  registration: {
+    deadline: "2027-02-15T23:59:00+05:00", // (demo) drives the live countdown; a past date closes registration everywhere
+    closed: false,
+    url: "/register", // competition id is appended as ?competition=
+  },
+
+  stats: [
+    // null = keep the [Confirmed count] placeholder
+    { label: "Competitions", value: "auto" }, // 'auto' = counted from the competitions list below
+    { label: "Universities", value: null },
+    { label: "Participants", value: null },
+  ],
+
+  categories: [
+    { id: "cs", label: "Computer Science" },
+    { id: "ai", label: "Artificial Intelligence" },
+    { id: "ee", label: "Electrical Engineering" },
+    { id: "se", label: "Software Engineering" },
+    { id: "biz", label: "Business" },
+    { id: "gen", label: "General" },
+    { id: "gaming", label: "Gaming" },
+  ],
+
+  /* DEMO COMPETITIONS — proposed titles and sample logistics, not an official catalogue.
+     Programming (Day 1, 11:30 AM, Lab 1) and AI & Data (Day 1, 02:30 PM, Lab 2) match the wireframe schedule.
+     access: 'open' | 'viewing' | 'participants' */
+  competitions: [
+    {
+      id: "programming-competition",
+      name: "Programming Competition",
+      cat: "cs",
+      day: 1,
+      start: "11:30 AM",
+      end: "02:30 PM",
+      venue: "Lab 1",
+      team: "1–3 members",
+      access: "participants",
+      blurb:
+        "Solve algorithmic challenges, test your problem-solving skills, and compete against other student programmers.",
+      intro:
+        "Take on a series of programming problems that challenge your logic, accuracy, and problem-solving approach.",
+    },
+    {
+      id: "debugging-challenge",
+      name: "Debugging Challenge",
+      cat: "cs",
+      day: 2,
+      start: "10:00 AM",
+      end: "12:00 PM",
+      venue: "Lab 3",
+      individual: true,
+      access: "participants",
+      blurb: "Find and fix bugs in existing code, quickly and accurately.",
+      intro:
+        "Read unfamiliar code, track down what’s broken, and fix it before the clock runs out.",
+    },
+    {
+      id: "ai-data-challenge",
+      name: "AI & Data Challenge",
+      cat: "ai",
+      day: 1,
+      start: "02:30 PM",
+      end: "05:30 PM",
+      venue: "Lab 2",
+      team: "2–4 members",
+      access: "participants",
+      blurb: "Work with real data and build a model that solves a set problem.",
+      intro:
+        "Explore a dataset, build a model, and show how well your approach works.",
+    },
+    {
+      id: "machine-learning-challenge",
+      name: "Machine Learning Challenge",
+      cat: "ai",
+      day: 2,
+      start: "01:00 PM",
+      end: "04:00 PM",
+      venue: "Lab 2",
+      team: "2–3 members",
+      access: "participants",
+      blurb:
+        "Train, test and improve machine learning models for a given task.",
+      intro:
+        "Train and tune models for a set task and see how your results compare.",
+    },
+    {
+      id: "circuit-design-challenge",
+      name: "Circuit Design Challenge",
+      cat: "ee",
+      day: 1,
+      start: "12:00 PM",
+      end: "03:00 PM",
+      venue: "EE Lab",
+      team: "2–3 members",
+      access: "participants",
+      blurb: "Design and test circuits that meet a set of requirements.",
+      intro:
+        "Plan, build and test a circuit that does exactly what the brief asks.",
+    },
+    {
+      id: "robotics-challenge",
+      name: "Robotics Challenge",
+      cat: "ee",
+      day: 3,
+      start: "10:00 AM",
+      end: "01:00 PM",
+      venue: "Robotics Arena",
+      team: "3–5 members",
+      access: "viewing",
+      blurb: "Build and control a robot to complete a series of tasks.",
+      intro:
+        "Get your robot through a series of tasks with smart design and control.",
+    },
+    {
+      id: "ui-ux-design-challenge",
+      name: "UI/UX Design Challenge",
+      cat: "se",
+      day: 2,
+      start: "11:00 AM",
+      end: "02:00 PM",
+      venue: "Design Studio",
+      team: "1–2 members",
+      access: "participants",
+      blurb: "Design clear, usable screens for a real-world problem.",
+      intro:
+        "Turn a real problem into screens that are clear, useful and easy to use.",
+    },
+    {
+      id: "app-development-challenge",
+      name: "App Development Challenge",
+      cat: "se",
+      day: 3,
+      start: "09:30 AM",
+      end: "03:30 PM",
+      venue: "Lab 4",
+      team: "2–4 members",
+      access: "participants",
+      blurb: "Plan and build a working app around a given theme.",
+      intro:
+        "Plan, build and demo a working app around the theme you’re given.",
+    },
+    {
+      id: "business-case-challenge",
+      name: "Business Case Challenge",
+      cat: "biz",
+      day: 2,
+      start: "02:30 PM",
+      end: "05:00 PM",
+      venue: "Seminar Hall",
+      team: "2–4 members",
+      access: "participants",
+      blurb: "Analyse a business problem and present your solution.",
+      intro:
+        "Work through a real business problem and make a clear case for your solution.",
+    },
+    {
+      id: "startup-pitch-competition",
+      name: "Startup Pitch Competition",
+      cat: "biz",
+      day: 3,
+      start: "02:00 PM",
+      end: "04:30 PM",
+      venue: "Main Auditorium",
+      team: "1–4 members",
+      access: "open",
+      blurb: "Pitch your startup idea and answer questions about it.",
+      intro: "Present your startup idea and show why it’s worth backing.",
+    },
+    {
+      id: "general-knowledge-quiz",
+      name: "General Knowledge Quiz",
+      cat: "gen",
+      day: 1,
+      start: "03:30 PM",
+      end: "04:30 PM",
+      venue: "Seminar Hall",
+      team: "2 members",
+      access: "open",
+      blurb: "Answer questions on science, tech, current affairs and more.",
+      intro:
+        "Quick-fire questions across science, technology, current affairs and more.",
+    },
+    {
+      id: "gaming-tournament",
+      name: "Gaming Tournament",
+      cat: "gaming",
+      day: 3,
+      start: "11:00 AM",
+      end: "06:00 PM",
+      venue: "Gaming Arena",
+      team: "Teams of 5",
+      access: "viewing",
+      blurb: "Play organised matches against other students.",
+      intro: "Compete in organised matches and play your way up the bracket.",
+    },
+    /* --- more demo competitions --- */
+    {
+      id: "code-golf-challenge",
+      name: "Code Golf Challenge",
+      cat: "cs",
+      day: 2,
+      start: "03:00 PM",
+      end: "04:30 PM",
+      venue: "Lab 1",
+      individual: true,
+      access: "participants",
+      blurb: "Solve problems using as few characters of code as you can.",
+      intro:
+        "Every character counts. Write the shortest working solution to each problem.",
+    },
+    {
+      id: "data-structures-sprint",
+      name: "Data Structures Sprint",
+      cat: "cs",
+      day: 3,
+      start: "11:00 AM",
+      end: "12:30 PM",
+      venue: "Lab 3",
+      team: "1–2 members",
+      access: "participants",
+      blurb: "Race through problems built around classic data structures.",
+      intro:
+        "Stacks, trees, graphs and more: pick the right structure and solve fast.",
+    },
+    {
+      id: "computer-vision-challenge",
+      name: "Computer Vision Challenge",
+      cat: "ai",
+      day: 3,
+      start: "01:00 PM",
+      end: "04:00 PM",
+      venue: "Lab 2",
+      team: "2–3 members",
+      access: "participants",
+      blurb: "Teach a model to understand images and video.",
+      intro:
+        "Build a model that can see: detect, classify or track what’s in an image.",
+    },
+    {
+      id: "prompt-engineering-challenge",
+      name: "Prompt Engineering Challenge",
+      cat: "ai",
+      day: 1,
+      start: "10:30 AM",
+      end: "12:00 PM",
+      venue: "Lab 5",
+      individual: true,
+      access: "participants",
+      blurb: "Write prompts that get AI tools to solve tricky tasks.",
+      intro:
+        "Find the words that make an AI model do exactly what the task needs.",
+    },
+    {
+      id: "embedded-systems-challenge",
+      name: "Embedded Systems Challenge",
+      cat: "ee",
+      day: 2,
+      start: "10:00 AM",
+      end: "01:00 PM",
+      venue: "EE Lab",
+      team: "2–3 members",
+      access: "participants",
+      blurb: "Program microcontrollers to control real hardware.",
+      intro:
+        "Write code that runs on small devices and makes real hardware respond.",
+    },
+    {
+      id: "line-follower-race",
+      name: "Line Follower Race",
+      cat: "ee",
+      day: 3,
+      start: "03:30 PM",
+      end: "05:30 PM",
+      venue: "Robotics Arena",
+      team: "2–4 members",
+      access: "viewing",
+      blurb: "Build a robot that races along a marked track.",
+      intro:
+        "Tune your sensors and motors so your robot follows the line fastest.",
+    },
+    {
+      id: "web-development-challenge",
+      name: "Web Development Challenge",
+      cat: "se",
+      day: 1,
+      start: "01:00 PM",
+      end: "05:00 PM",
+      venue: "Lab 3",
+      team: "2–3 members",
+      access: "participants",
+      blurb: "Build a working website from a brief in a few hours.",
+      intro:
+        "Get a brief, plan your pages, and ship a working website before time runs out.",
+    },
+    {
+      id: "software-testing-challenge",
+      name: "Software Testing Challenge",
+      cat: "se",
+      day: 3,
+      start: "09:30 AM",
+      end: "11:30 AM",
+      venue: "Lab 5",
+      team: "1–2 members",
+      access: "participants",
+      blurb: "Find bugs and write tests that catch broken software.",
+      intro:
+        "Hunt for bugs, write tests that expose them, and explain what went wrong.",
+    },
+    {
+      id: "marketing-strategy-challenge",
+      name: "Marketing Strategy Challenge",
+      cat: "biz",
+      day: 1,
+      start: "11:00 AM",
+      end: "01:30 PM",
+      venue: "Seminar Hall 2",
+      team: "2–4 members",
+      access: "participants",
+      blurb: "Plan a campaign for a real product and pitch it.",
+      intro:
+        "Plan who to reach, what to say and how to measure it, then pitch your plan.",
+    },
+    {
+      id: "product-management-case",
+      name: "Product Management Case",
+      cat: "biz",
+      day: 2,
+      start: "10:30 AM",
+      end: "12:30 PM",
+      venue: "Seminar Hall",
+      team: "2–3 members",
+      access: "participants",
+      blurb: "Decide what a product should build next and explain why.",
+      intro:
+        "Weigh user needs, data and trade-offs to decide what to build next.",
+    },
+    {
+      id: "treasure-hunt",
+      name: "Treasure Hunt",
+      cat: "gen",
+      day: 2,
+      start: "03:30 PM",
+      end: "05:30 PM",
+      venue: "Courtyard",
+      team: "3–4 members",
+      access: "open",
+      blurb: "Solve clues and race around campus to find the prize.",
+      intro:
+        "Crack clues, run between checkpoints, and be the first team to the treasure.",
+    },
+    {
+      id: "speed-typing-contest",
+      name: "Speed Typing Contest",
+      cat: "gen",
+      day: 1,
+      start: "05:00 PM",
+      end: "06:00 PM",
+      venue: "Lab 4",
+      individual: true,
+      access: "open",
+      blurb: "Type fast and accurately to climb the leaderboard.",
+      intro: "Speed matters, but so does accuracy. Mistakes cost you points.",
+    },
+    {
+      id: "racing-game-cup",
+      name: "Racing Game Cup",
+      cat: "gaming",
+      day: 2,
+      start: "01:00 PM",
+      end: "05:00 PM",
+      venue: "Gaming Arena",
+      individual: true,
+      access: "viewing",
+      blurb: "Race head-to-head in a knockout bracket.",
+      intro:
+        "Qualify with your best lap, then race your way through the knockout bracket.",
+    },
+    {
+      id: "strategy-game-showdown",
+      name: "Strategy Game Showdown",
+      cat: "gaming",
+      day: 1,
+      start: "02:00 PM",
+      end: "06:00 PM",
+      venue: "Gaming Arena",
+      team: "1–2 members",
+      access: "viewing",
+      blurb: "Outthink your opponents in strategy matches.",
+      intro:
+        "Plan ahead, manage resources and outthink every opponent you face.",
+    },
+  ],
+
+  /* SCHEDULE — competition sessions are generated automatically from the list above.
+     These are the other (demo) sessions. */
+  days: [
+    { n: 1, date: "2027-02-26", published: true },
+    { n: 2, date: "2027-02-27", published: true },
+    { n: 3, date: "2027-02-28", published: true },
+  ],
+  sessions: [
+    {
+      id: "opening-ceremony",
+      day: 1,
+      time: "09:00 AM",
+      title: "Opening Ceremony",
+      venue: "Main Auditorium",
+      type: "Ceremony",
+      access: "open",
+    },
+    {
+      id: "keynote-talk",
+      day: 1,
+      time: "10:00 AM",
+      title: "Keynote Talk",
+      venue: "Main Auditorium",
+      type: "Talk",
+      access: "open",
+    },
+    {
+      id: "panel-day1",
+      day: 1,
+      time: "04:00 PM",
+      title: "Panel Discussion",
+      venue: "Main Auditorium",
+      type: "Panel",
+      access: "open",
+    },
+    {
+      id: "workshop-git",
+      day: 2,
+      time: "09:30 AM",
+      title: "Workshop: Git & GitHub Basics",
+      venue: "Seminar Hall 2",
+      type: "Workshop",
+      access: "participants",
+    },
+    {
+      id: "job-fair",
+      day: 2,
+      time: "12:00 PM",
+      title: "Job Fair",
+      venue: "Exhibition Hall",
+      type: "Career",
+      access: "open",
+    },
+    {
+      id: "panel-day2",
+      day: 2,
+      time: "03:00 PM",
+      title: "Panel Discussion: Careers in Tech",
+      venue: "Main Auditorium",
+      type: "Panel",
+      access: "open",
+    },
+    {
+      id: "startup-showcase",
+      day: 3,
+      time: "10:00 AM",
+      title: "Startup Showcase",
+      venue: "Exhibition Hall",
+      type: "Showcase",
+      access: "open",
+    },
+    {
+      id: "workshop-design",
+      day: 3,
+      time: "01:00 PM",
+      title: "Workshop: Designing for Users",
+      venue: "Design Studio",
+      type: "Workshop",
+      access: "participants",
+    },
+    {
+      id: "closing-ceremony",
+      day: 3,
+      time: "06:30 PM",
+      title: "Closing & Prize Ceremony",
+      venue: "Main Auditorium",
+      type: "Ceremony",
+      access: "open",
+    },
+  ],
+
+  /* DEMO EVENT DETAILS — used for the charts on each competition page (all mock values).
+     Per category: skills tested (0–100), scoring weights (%), rounds (minutes), difficulty (1–5). */
+  mock: {
+    prizes: [50000, 30000, 15000], // (demo) PKR — shown as “Demo prize”
+    currency: "PKR",
+    cats: {
+      cs: {
+        skills: {
+          Logic: 92,
+          Speed: 80,
+          Teamwork: 50,
+          Creativity: 60,
+          Knowledge: 85,
+          Presenting: 20,
+        },
+        scoring: [
+          ["Correct solutions", 60],
+          ["Speed", 25],
+          ["Code quality", 15],
+        ],
+        rounds: [
+          ["Check-in", 20],
+          ["Warm-up round", 30],
+          ["Main round", 120],
+          ["Results", 15],
+        ],
+        difficulty: 4,
+      },
+      ai: {
+        skills: {
+          Logic: 80,
+          Speed: 45,
+          Teamwork: 70,
+          Creativity: 72,
+          Knowledge: 90,
+          Presenting: 55,
+        },
+        scoring: [
+          ["Model accuracy", 50],
+          ["Approach", 30],
+          ["Presentation", 20],
+        ],
+        rounds: [
+          ["Check-in", 20],
+          ["Data briefing", 20],
+          ["Build phase", 150],
+          ["Demo & judging", 40],
+        ],
+        difficulty: 4,
+      },
+      ee: {
+        skills: {
+          Logic: 76,
+          Speed: 50,
+          Teamwork: 82,
+          Creativity: 65,
+          Knowledge: 86,
+          Presenting: 35,
+        },
+        scoring: [
+          ["Working result", 50],
+          ["Design", 30],
+          ["Time taken", 20],
+        ],
+        rounds: [
+          ["Check-in", 20],
+          ["Brief & parts", 20],
+          ["Build & test", 120],
+          ["Final run", 30],
+        ],
+        difficulty: 3,
+      },
+      se: {
+        skills: {
+          Logic: 66,
+          Speed: 50,
+          Teamwork: 76,
+          Creativity: 90,
+          Knowledge: 70,
+          Presenting: 72,
+        },
+        scoring: [
+          ["Usability", 40],
+          ["Design quality", 35],
+          ["Presentation", 25],
+        ],
+        rounds: [
+          ["Check-in", 15],
+          ["Brief", 15],
+          ["Build", 150],
+          ["Showcase", 40],
+        ],
+        difficulty: 3,
+      },
+      biz: {
+        skills: {
+          Logic: 70,
+          Speed: 40,
+          Teamwork: 86,
+          Creativity: 80,
+          Knowledge: 64,
+          Presenting: 95,
+        },
+        scoring: [
+          ["Analysis", 40],
+          ["Pitch", 35],
+          ["Q&A", 25],
+        ],
+        rounds: [
+          ["Check-in", 15],
+          ["Case reveal", 15],
+          ["Prep time", 90],
+          ["Pitch & Q&A", 40],
+        ],
+        difficulty: 3,
+      },
+      gen: {
+        skills: {
+          Logic: 60,
+          Speed: 86,
+          Teamwork: 70,
+          Creativity: 55,
+          Knowledge: 92,
+          Presenting: 30,
+        },
+        scoring: [
+          ["Correct answers", 70],
+          ["Speed", 20],
+          ["Tiebreakers", 10],
+        ],
+        rounds: [
+          ["Check-in", 15],
+          ["Qualifier", 30],
+          ["Semi-final", 30],
+          ["Final", 30],
+        ],
+        difficulty: 2,
+      },
+      gaming: {
+        skills: {
+          Logic: 62,
+          Speed: 95,
+          Teamwork: 80,
+          Creativity: 50,
+          Knowledge: 55,
+          Presenting: 15,
+        },
+        scoring: [
+          ["Match wins", 70],
+          ["Points difference", 20],
+          ["Fair play", 10],
+        ],
+        rounds: [
+          ["Check-in", 20],
+          ["Group stage", 120],
+          ["Knockouts", 120],
+          ["Grand final", 45],
+        ],
+        difficulty: 3,
+      },
+    },
+  },
+
+  featuredTeams: [
+    {
+      name: "Programming Competitions",
+      slug: "programming-competitions",
+      dept: "comp",
+      role: "Plans and runs PROCOM’s programming competitions.",
+    },
+    {
+      name: "AI & Data Competitions",
+      slug: "ai-data-competitions",
+      dept: "comp",
+      role: "Plans and runs the AI and data competitions.",
+    },
+    {
+      name: "UI/UX",
+      slug: "ui-ux",
+      dept: "tech",
+      role: "Designs the screens and user experience for PROCOM online.",
+    },
+    {
+      name: "Media",
+      slug: "media",
+      dept: "creative",
+      role: "Covers PROCOM through photos, video and content.",
+    },
+  ],
+};
+
+export default data;

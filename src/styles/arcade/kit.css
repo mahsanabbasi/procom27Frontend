@@ -1,0 +1,33 @@
+/* PROCOM'27 — shared kit pieces (placeholder chip, page transition, fun details) *//* Placeholder chip: every unconfirmed value uses this */
+.pd .tbc{display:inline-flex;align-items:center;gap:6px;padding:1px 8px;border:var(--bw) dashed var(--c-primary);background:var(--c-tint-1);color:var(--c-primary-bright);font:600 .86em/1.5 var(--f-body);letter-spacing:0;text-transform:none;white-space:nowrap;vertical-align:baseline}
+.pd .tbc--block{display:flex;white-space:normal;padding:12px 14px;font-size:14px;line-height:1.5;color:var(--c-text-2)}
+.pd .tbc--block .i{--i-size:14px;color:var(--c-primary);flex:none;margin-top:3px}
+/* Pixel page transition */
+.px-cover{position:fixed;inset:0;z-index:300;pointer-events:none;width:100%;height:100%}
+/* Disabled register state */
+.pd [data-register].is-closed{pointer-events:none}
+/* =====================================================================
+   FUN DETAILS (shared)
+   ===================================================================== *//* 1UP back-to-top */
+.pd .oneup{position:fixed;right:20px;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);z-index:90;display:grid;justify-items:center;gap:4px;padding:10px 10px 8px;background:var(--c-card);border:var(--bw) solid var(--c-primary);color:var(--c-primary-bright);box-shadow:0 4px 0 var(--c-border);opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity var(--d-base),transform var(--d-slow) var(--ease)}
+.pd .oneup.is-on{opacity:1;transform:none;pointer-events:auto}
+.pd .oneup:hover{background:var(--c-primary);color:var(--c-bg)}
+.pd .oneup:active{transform:translateY(3px);box-shadow:0 1px 0 var(--c-border)}
+.pd .oneup__t{font:400 9px/1 var(--f-display)}
+.pd .oneup__p{font:400 7px/1 var(--f-display);opacity:.8}
+.pd .oneup.is-on .oneup__t{animation:pd-blink 1.2s steps(2) 3}
+/* insert coin */
+.pd .coin{display:inline-flex;align-items:center;gap:10px;padding:6px 10px;border:var(--bw) dashed var(--c-border);color:var(--c-text-2);font:400 8px/1 var(--f-display);letter-spacing:.08em;text-transform:uppercase;transition:all var(--d-fast)}
+.pd .coin i{width:10px;height:10px;background:var(--c-primary);border-radius:50%;box-shadow:inset -2px -2px 0 rgba(7,6,11,.35)}
+.pd .coin b{font-weight:400;color:var(--c-primary-bright)}
+.pd .coin:hover{border-color:var(--c-primary);color:var(--c-text)}
+.pd .coin:active i{transform:translateY(3px)}
+/* letter hop (headlines) */
+.pd .hop{display:inline-block;transition:transform .25s steps(3),color .2s}
+.pd .hop:hover{transform:translateY(-.18em);color:var(--c-primary-bright)}
+/* typewriter cursor for section labels */
+.pd .sh__label.typing::after{content:"";display:inline-block;width:7px;height:10px;background:currentColor;margin-left:4px;animation:pd-blink .8s steps(2) infinite}
+/* CRT cheat mode (Konami code) */
+html.pd-page.cheat body::after{content:"";position:fixed;inset:0;z-index:500;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(7,6,11,.28) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 60%,rgba(7,6,11,.55));mix-blend-mode:multiply}
+.cheat .pd .t-d1,.cheat .pd .t-d2{text-shadow:2px 2px 0 var(--c-border)}
+@media (prefers-reduced-motion:reduce){.pd .hop:hover{transform:none}}

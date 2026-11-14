@@ -2,7 +2,9 @@
 
 The app serves the homepage at `/`, the About Us page at `/about`, and the team directory and team pages at `/teams` and `/teams/:slug`.
 
-Confirmed team names and designations live in `src/data/teamMembers.js`, mapped to the team slugs in `src/data/teams.js`. Homepage and directory cards show leadership previews; each team page shows its full confirmed roster. Both organiser sheets are recorded in the data file. Existing assignments are preserved, and the final ED Computing section is excluded. Content Creation has no supplied roster and retains pending leadership details.
+Confirmed team names and designations live in `src/data/teamMembers.js`, mapped to the team slugs in `src/data/teams.js`. Homepage and directory cards show leadership previews; each team page shows its full confirmed roster.
+
+The Teams page (`/teams`, with a team's detail view at `/teams/:slug`) is the arcade design: every team on a spinning ring around an LED screen (a vertical drum on phones), with search, a category picker and a team menu. It lives in `src/components/teams/`, uses its own nav and footer from `src/components/arcade/`, and reads the same registry through `src/data/teamDirectory.js` (departments, panel codes and search aliases). Its stylesheet in `src/styles/arcade/` is scoped under `.pd`, with keyframes prefixed `pd-`, so it never touches the other pages. Route links for that nav and footer are set in `src/utils/arcade/routes.js`. Both organiser sheets are recorded in the data file. Existing assignments are preserved, and the final ED Computing section is excluded. Content Creation has no supplied roster and retains pending leadership details.
 
 About Us uses the shared navigation, footer, contact dialog, and starfield from the homepage. Its content lives in `src/components/AboutPage.jsx`, with the history timeline in `src/components/AboutHistory.jsx` and milestone copy in `src/data/procomMilestones.js`. The homepage’s About link and “Our story” button open `/about`; the About page’s “Join competitions” button returns to `/#competitions`.
 

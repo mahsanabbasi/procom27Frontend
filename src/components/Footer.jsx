@@ -7,6 +7,7 @@ import { CreditsPanel, CreditsToggle } from './FooterCredits.jsx';
 const PAGE_LINKS = [
   { label: 'About', href: '/about' },
   { label: 'Competitions', href: '/#competitions' },
+  { label: 'Why Attend', href: '/why-attend' },
   { label: 'Why PROCOM', href: '/#why' },
   { label: 'All teams', href: TEAMS_PATH },
   { label: 'Intro Day', href: '/#schedule' },
