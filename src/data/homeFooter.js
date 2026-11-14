@@ -40,8 +40,4 @@ export const homeFooter = {
     { label: 'Shipping Policy', href: '/shipping-policy' },
   ],
   copyright: '© PROCOM ’27. All rights reserved.',
-  runnerPlayer: '--·----',
-  runnerScore: '00000',
-  runnerHelp: 'Space, ↑ or tap to jump. The highest score takes the champion spot.',
-  leaderboardNote: 'Scores are saved on this device',
 };
