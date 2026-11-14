@@ -10,7 +10,6 @@ export const homeFooter = {
   quickLinks: [
     { label: 'Home', href: '/' },
     { label: 'Competitions', href: '/competitions' },
-    { label: 'Foodfest', href: '/foodfest' },
     { label: 'Teams', href: '/teams' },
     { label: 'Schedule', href: '/schedule' },
     { label: 'About Us', href: '/about' },
