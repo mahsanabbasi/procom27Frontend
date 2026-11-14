@@ -5,6 +5,7 @@ import { HomeHeader } from './HomeHeader.jsx';
 import HomeHero from './HomeHero.jsx';
 import { AboutSection } from '../AboutSection.jsx';
 import WhyAttendSection from './WhyAttendSection.jsx';
+import HomeTeamsSection from './HomeTeamsSection.jsx';
 import { IntroScheduleSection } from '../IntroScheduleSection.jsx';
 import RegistrationCalloutSection from './RegistrationCalloutSection.jsx';
 import HomeCompetitionCategoriesSection from './HomeCompetitionCategoriesSection.jsx';
@@ -32,6 +33,7 @@ export default function HomePage({ onContactClick }) {
       <HomeCompetitionCategoriesSection />
       <FeaturedCompetitionsSection />
       <WhyAttendSection />
+      <HomeTeamsSection />
       <AboutSection />
       <IntroScheduleSection />
     </div>
