@@ -93,7 +93,9 @@ export default function FeaturedCompetitionsSection() {
   const pointerInsideRef = useRef(false);
   const focusInsideRef = useRef(false);
   const interactingRef = useRef(false);
-  const startTimeRef = useRef(0);
+  const inViewportRef = useRef(true);
+  const elapsedRef = useRef(0);
+  const lastFrameTimeRef = useRef(null);
   const infoTimerRef = useRef(null);
   const screenTimerRef = useRef(null);
   const animationTimerRef = useRef(null);
@@ -111,9 +113,8 @@ export default function FeaturedCompetitionsSection() {
 
   const show = useCallback((requestedIndex, animate = true) => {
     const index = (requestedIndex + featuredCompetitions.length) % featuredCompetitions.length;
-    const now = performance.now();
     selectedRef.current = index;
-    startTimeRef.current = now;
+    elapsedRef.current = 0;
     if (progressRef.current) progressRef.current.style.width = '0%';
     clearSlideTimers();
 
@@ -149,7 +150,7 @@ export default function FeaturedCompetitionsSection() {
   const setPause = useCallback((nextPaused) => {
     pausedRef.current = nextPaused || reducedRef.current;
     setUserPaused(nextPaused && !reducedRef.current);
-    startTimeRef.current = performance.now();
+    lastFrameTimeRef.current = null;
   }, []);
 
   const press = useCallback((button) => {
@@ -181,7 +182,7 @@ export default function FeaturedCompetitionsSection() {
     pointerInsideRef.current = pointerInside;
     focusInsideRef.current = focusInside;
     const interacting = pointerInside || focusInside;
-    if (interactingRef.current && !interacting) startTimeRef.current = performance.now();
+    if (interactingRef.current !== interacting) lastFrameTimeRef.current = null;
     interactingRef.current = interacting;
   }, []);
 
@@ -229,7 +230,7 @@ export default function FeaturedCompetitionsSection() {
   useEffect(() => {
     reducedRef.current = reduceMotion;
     pausedRef.current = reduceMotion || userPaused;
-    startTimeRef.current = performance.now();
+    lastFrameTimeRef.current = null;
     if (reduceMotion) {
       handheldRef.current?.classList.remove('is-swap');
       infoPanelRef.current?.classList.remove('is-swapping');
@@ -238,16 +239,38 @@ export default function FeaturedCompetitionsSection() {
 
   useEffect(() => {
     let frame = 0;
+    const handleVisibilityChange = () => {
+      lastFrameTimeRef.current = null;
+    };
+    const observer = 'IntersectionObserver' in window
+      ? new IntersectionObserver(([entry]) => {
+        inViewportRef.current = entry.isIntersecting;
+        lastFrameTimeRef.current = null;
+      }, { threshold: 0 })
+      : null;
+    if (observer && handheldRef.current) observer.observe(handheldRef.current);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     const animateProgress = (time) => {
-      if (!pausedRef.current && !interactingRef.current && !document.hidden) {
-        const progress = (time - startTimeRef.current) / slideDuration;
+      const running = !pausedRef.current
+        && !interactingRef.current
+        && !document.hidden
+        && inViewportRef.current;
+      if (running) {
+        if (lastFrameTimeRef.current !== null) elapsedRef.current += time - lastFrameTimeRef.current;
+        const progress = elapsedRef.current / slideDuration;
         if (progressRef.current) progressRef.current.style.width = `${Math.min(100, progress * 100)}%`;
         if (progress >= 1) show(selectedRef.current + 1);
       }
+      lastFrameTimeRef.current = time;
       frame = requestAnimationFrame(animateProgress);
     };
     frame = requestAnimationFrame(animateProgress);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [show]);
 
   useEffect(() => () => {

@@ -183,7 +183,7 @@ export default function HomeHero() {
                       </h1>
                       <p className="t-body-lg scr-in" style={{ '--i': 2 }}>{homeHeroContent.description}</p>
                       <div className="btn-row scr-in" style={{ '--i': 3 }}>
-                        <Link className="btn btn--arcade" href="/register" data-demo data-demo-kind="register" data-register>
+                        <Link className="btn btn--arcade" href="/register" data-demo data-demo-kind="register" data-register data-act="start">
                           <Icon name="play" />Register now
                         </Link>
                         <Link className="btn btn--secondary" href="/competitions">

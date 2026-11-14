@@ -540,6 +540,7 @@ body:has(.app-home-route) .initialization-atmosphere { display: none !important;
 .home-page .btn--secondary{background:transparent;color:var(--c-text);border-color:var(--c-border)}
 .home-page .btn--arcade{min-height:var(--btn-h-xl);padding:14px 32px;font-size:14px;letter-spacing:.08em;background:var(--c-primary);color:var(--c-bg);border-color:var(--c-primary-bright);
   box-shadow:0 5px 0 var(--c-border)}
+.home-page .scr .btn--arcade:is(:active,.is-press){transform:translateY(1px)}
 .home-page .btn-row{display:flex;flex-wrap:wrap;gap:var(--s-2);align-items:center}
 .home-page .card{position:relative;background:var(--c-card);border:var(--bw) solid var(--c-border);border-radius:var(--radius);padding:var(--s-3)}
 .home-page .home-page{}

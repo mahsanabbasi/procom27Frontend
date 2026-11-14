@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { useLocation } from 'wouter';
 import { homeHeroContent } from '../../data/homeHero.js';
 import { ensureHomeFontsReady } from './homeFonts.js';
 
@@ -28,6 +29,7 @@ function getInitialBootState() {
 }
 
 export function useHomeHeroEffects() {
+  const [, setLocation] = useLocation();
   const consoleRef = useRef(null);
   const screenRef = useRef(null);
   const logoCanvasRef = useRef(null);
@@ -673,10 +675,10 @@ export function useHomeHeroEffects() {
       } else if (action === 'up') {
         window.scrollTo({ top: 0, behavior: motionEnabled ? 'smooth' : 'auto' });
       } else if (action === 'down') {
-        scrollToId('register');
+        scrollToId('play');
       } else if (action === 'ok') {
         if (selectedIndex < 0) selectCategory(0);
-        else scrollToId('competitions');
+        else setLocation(`/competitions?cat=${encodeURIComponent(categories[selectedIndex].id)}`);
       } else if (action === 'select') {
         blastLogo(logoWidth / 2 + (Math.random() - 0.5) * 20, logoHeight / 2);
       } else if (action === 'home') {
@@ -924,7 +926,7 @@ export function useHomeHeroEffects() {
       screen.classList.remove('pulse');
       nub.classList.remove('is-drag');
     };
-  }, [initialBootState.showBoot]);
+  }, [initialBootState.showBoot, setLocation]);
 
   return {
     consoleRef,
