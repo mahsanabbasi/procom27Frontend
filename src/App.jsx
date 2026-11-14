@@ -7,6 +7,7 @@ import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 import { getTeamBySlug } from './data/teams.js';
 import { ensureHomeFontsReady } from './components/home/homeFonts.js';
+import ComingSoonPage from './components/ComingSoonPage.jsx';
 
 import HomePage from './components/home/HomePage.jsx';
 
@@ -183,7 +184,7 @@ function MainLayout() {
                 <Route path="/teams/:slug">
                   {(params) => <TeamDetailPage slug={decodeURIComponent(params.slug)} />}
                 </Route>
-                <Route component={HomePage} />
+                <Route component={ComingSoonPage} />
               </Switch>
             </Suspense>
           </ErrorBoundary>
