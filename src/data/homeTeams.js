@@ -1,7 +1,7 @@
 // Final-reference data from homepage_final.html.
 export const homeTeams = [
   {
-    slug: 'programming-competitions',
+    slug: 'programming',
     name: 'Programming Competitions',
     dept: 'comp',
     role: 'Plans and runs PROCOM’s programming competitions.',
@@ -9,7 +9,7 @@ export const homeTeams = [
     accent: '#C9A2FF',
   },
   {
-    slug: 'ai-data-competitions',
+    slug: 'ai-data',
     name: 'AI & Data Competitions',
     dept: 'comp',
     role: 'Plans and runs the AI and data competitions.',
@@ -43,8 +43,8 @@ export const homeTeamDept = {
 };
 
 export const homeTeamCode = {
-  'programming-competitions': 'PRG',
-  'ai-data-competitions': 'AI',
+  'programming': 'PRG',
+  'ai-data': 'AI',
   'ui-ux': 'UX',
   media: 'MED',
 };
