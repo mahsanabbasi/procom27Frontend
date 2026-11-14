@@ -243,7 +243,17 @@ export default function HomeScheduleSection() {
                           aria-label={`${session.title}, ${session.time}${session.end ? ` to ${session.end}` : ''}${session.venue ? `, ${session.venue}` : ''}${isDim ? ', participants only' : ''}`}
                           onClick={() => selectSession(session, true)}
                           onPointerMove={(event) => moveTooltip(session, event)}
-                          onPointerLeave={hideTooltip}
+                          onPointerLeave={(event) => {
+                            if (document.activeElement !== event.currentTarget) hideTooltip();
+                          }}
+                          onFocus={(event) => {
+                            const rect = event.currentTarget.getBoundingClientRect();
+                            moveTooltip(session, {
+                              clientX: rect.left + rect.width / 2,
+                              clientY: rect.top + rect.height / 2,
+                            });
+                          }}
+                          onBlur={hideTooltip}
                         >
                           <span className="blk__t">{session.title}</span>
                           <span className="blk__time" aria-hidden="true">{shortTime(session.time)}</span>

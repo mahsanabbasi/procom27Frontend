@@ -1,0 +1,42 @@
+// Final-reference links and demo placeholders; social/contact values are unconfigured.
+export const homeFooter = {
+  brand: 'PROCOM’27',
+  tagline: 'Where skill meets scale',
+  about: 'Bringing students together to compete, connect, and explore new opportunities.',
+  socials: [],
+  quickLinks: [
+    { label: 'Home', href: '/' },
+    { label: 'Competitions', href: '/competitions' },
+    { label: 'Teams', href: '/teams' },
+    { label: 'Schedule', href: '/schedule' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Sponsors', href: '/sponsors' },
+    { label: 'Job Orbit', href: '/job-orbit' },
+    { label: 'Workshops', href: '/workshops' },
+    { label: 'Contact', href: '/contact' },
+  ],
+  competitions: [
+    { id: 'cs', label: 'Computer Science' },
+    { id: 'ai', label: 'Artificial Intelligence' },
+    { id: 'ee', label: 'Electrical Engineering' },
+    { id: 'se', label: 'Software Engineering' },
+    { id: 'biz', label: 'Business' },
+    { id: 'gen', label: 'General' },
+    { id: 'gaming', label: 'Gaming' },
+  ],
+  contact: [
+    { label: '[Official email]', href: null },
+    { label: '[Official phone number]', href: null },
+    { label: '[Campus address]', href: null },
+  ],
+  legalLinks: [
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Return & Refund Policy', href: '/refund-policy' },
+    { label: 'Shipping Policy', href: '/shipping-policy' },
+  ],
+  copyright: '© PROCOM ’27. All rights reserved.',
+  runnerPlayer: '--·----',
+  runnerScore: '00000',
+  runnerHelp: 'Space, ↑ or tap to jump. The highest score takes the champion spot.',
+};

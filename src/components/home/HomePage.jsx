@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import './home.css';
 import { HomeHeader } from './HomeHeader.jsx';
 import HomeHero from './HomeHero.jsx';
-import { AboutSection } from '../AboutSection.jsx';
 import WhyAttendSection from './WhyAttendSection.jsx';
 import HomeTeamsSection from './HomeTeamsSection.jsx';
 import HomeScheduleSection from './HomeScheduleSection.jsx';
+import MoreAtProcomSection from './MoreAtProcomSection.jsx';
+import GameOverSection from './GameOverSection.jsx';
+import HomeFooter from './HomeFooter.jsx';
 import RegistrationCalloutSection from './RegistrationCalloutSection.jsx';
 import HomeCompetitionCategoriesSection from './HomeCompetitionCategoriesSection.jsx';
 import FeaturedCompetitionsSection from './FeaturedCompetitionsSection.jsx';
@@ -34,8 +36,10 @@ export default function HomePage({ onContactClick }) {
       <FeaturedCompetitionsSection />
       <WhyAttendSection />
       <HomeTeamsSection />
-      <AboutSection />
       <HomeScheduleSection />
+      <MoreAtProcomSection />
+      <GameOverSection />
+      <HomeFooter />
     </div>
   );
 }

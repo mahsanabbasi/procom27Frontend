@@ -189,7 +189,7 @@ function MainLayout() {
           </ErrorBoundary>
         </main>
 
-        <Footer onContactClick={() => setContactOpen(true)} />
+        {!isHomeRoute && <Footer onContactClick={() => setContactOpen(true)} />}
       </div>
 
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
