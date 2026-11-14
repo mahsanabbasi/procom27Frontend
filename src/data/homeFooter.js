@@ -1,12 +1,16 @@
-// Final-reference links and demo placeholders; social/contact values are unconfigured.
+// Static footer copy and links based on the final homepage reference.
 export const homeFooter = {
   brand: 'PROCOM’27',
   tagline: 'Where skill meets scale',
   about: 'Bringing students together to compete, connect, and explore new opportunities.',
-  socials: [],
+  socials: [
+    { label: 'Instagram', icon: 'instagram', href: 'https://www.instagram.com/procom_fast/?hl=en' },
+    { label: 'LinkedIn', icon: 'linkedin', href: 'https://pk.linkedin.com/company/procom-fast' },
+  ],
   quickLinks: [
     { label: 'Home', href: '/' },
     { label: 'Competitions', href: '/competitions' },
+    { label: 'Foodfest', href: '/foodfest' },
     { label: 'Teams', href: '/teams' },
     { label: 'Schedule', href: '/schedule' },
     { label: 'About Us', href: '/about' },
@@ -39,4 +43,5 @@ export const homeFooter = {
   runnerPlayer: '--·----',
   runnerScore: '00000',
   runnerHelp: 'Space, ↑ or tap to jump. The highest score takes the champion spot.',
+  leaderboardNote: 'Scores are saved on this device',
 };
