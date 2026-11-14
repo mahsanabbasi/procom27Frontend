@@ -1426,3 +1426,9 @@ body:has(.app-home-route) .initialization-atmosphere { display: none !important;
 .home-page #gameover .go__title * {
   visibility: visible !important;
 }
+/* Smaller hero stat boxes (about 18% smaller than the reference) */
+.home-page .stats{max-width:430px;gap:6px;margin-top:clamp(12px,1.8cqi,21px)}
+.home-page .stats .stat{padding:16px 10px;gap:5px 6px}
+.home-page .stats .stat .stat__v{font-size:clamp(13px,1.55cqi,18px)}
+.home-page .stats .stat .stat__l{font-size:14px}
+.home-page .stats .stat .tbc{font-size:12px;padding:0 5px}
