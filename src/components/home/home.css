@@ -1376,10 +1376,8 @@ body:has(.app-home-route) .initialization-atmosphere { display: none !important;
 @media (max-width:1000px){.home-page .footer__grid{grid-template-columns:repeat(2,1fr)}.home-page .footer__grid>div:first-child{grid-column:1/-1}}
 @media (max-width:860px){.home-page .frun{grid-template-columns:1fr}}
 @media (max-width:480px){.home-page .footer__grid{grid-template-columns:1fr 1fr;gap:var(--s-4) var(--s-3)}}
-/* Game Over title: always visible until JS reveal is added */
+/* Keep the title visible even before the section reveal observer fires. */
 .home-page #gameover .go__title,
 .home-page #gameover .go__title * {
-  opacity: 1 !important;
-  transform: none !important;
   visibility: visible !important;
 }
