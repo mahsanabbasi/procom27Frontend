@@ -694,6 +694,15 @@ body:has(.app-home-route) .initialization-atmosphere { display: none !important;
 .home-page .mts__em svg{width:100%;height:100%}
 .home-page .mts__flash{position:absolute;inset:0;background:var(--c-text);opacity:0;pointer-events:none}
 .home-page .mts__stamp{position:absolute;left:50%;top:50%;z-index:3;padding:9px 12px;font:400 14px/1.2 var(--f-display);text-transform:uppercase;text-align:center;white-space:nowrap;color:var(--c-bg);background:var(--c-primary-bright);border:3px solid var(--c-bg);box-shadow:0 0 0 3px var(--c-primary-bright);transform:translate(-50%,-50%) rotate(-9deg) scale(0);opacity:0;pointer-events:none}
+.home-page .mts__p1.is-swap .mts__em{animation:home-mtsEm .42s cubic-bezier(.2,.9,.25,1.2)}
+.home-page .mts__p1.is-swap .mts__flash{animation:home-mtsFlash .35s ease-out}
+.home-page .mts__p1.is-swap .mts__plate{animation:home-mtsPlate .4s var(--ease)}
+@keyframes home-mtsEm{from{opacity:0;transform:translateX(-60px) skewX(-12deg) scale(.85)}60%{opacity:1;transform:translateX(6px)}to{transform:none}}
+@keyframes home-mtsFlash{0%{opacity:.5}100%{opacity:0}}
+@keyframes home-mtsPlate{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+.home-page .mts__p1.is-locked .mts__stamp{animation:home-mtsStamp .5s cubic-bezier(.2,.9,.3,1.3) forwards}
+.home-page .mts__p1.is-locked .mts__flash{animation:home-mtsFlash .6s ease-out}
+@keyframes home-mtsStamp{from{opacity:0;transform:translate(-50%,-50%) rotate(-25deg) scale(2.4)}to{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1)}}
 .home-page .mts__plate{position:relative;z-index:2;margin:-20px 12px 0;padding:9px 12px 10px;background:var(--tone);color:var(--c-bg);transform:skewX(-8deg);box-shadow:5px 5px 0 rgba(7,6,11,.9)}
 .home-page .mts__plate>*{transform:skewX(8deg)}
 .home-page .mts__dept{display:block;font:400 7px/1.4 var(--f-display);letter-spacing:.1em;text-transform:uppercase;opacity:.75}
@@ -723,6 +732,20 @@ body:has(.app-home-route) .initialization-atmosphere { display: none !important;
 .home-page .mts__cursor i{position:absolute;inset:-5px;transform:skewX(var(--csk,-6deg));border:3px solid var(--c-primary-bright);box-shadow:0 0 0 2px #07060B;animation:home-mtsCur .8s steps(2) infinite}
 .home-page .mts__cursor b{position:absolute;left:-4px;top:-22px;padding:4px 6px;font:400 8px/1 var(--f-display);color:var(--c-bg);background:var(--c-primary-bright);box-shadow:2px 2px 0 #07060B}
 @keyframes home-mtsCur{50%{border-color:var(--c-primary)}}
+@media (prefers-reduced-motion:reduce){
+  .home-page #teams .mts__burst,
+  .home-page #teams .mts__tag,
+  .home-page #teams .mts__cursor i,
+  .home-page #teams .mtile.is-lock,
+  .home-page #teams .mts__p1.is-swap .mts__em,
+  .home-page #teams .mts__p1.is-swap .mts__flash,
+  .home-page #teams .mts__p1.is-swap .mts__plate,
+  .home-page #teams .mts__p1.is-locked .mts__stamp,
+  .home-page #teams .mts__p1.is-locked .mts__flash{animation:none!important}
+  .home-page #teams .mts__cursor,
+  .home-page #teams .mtile,
+  .home-page #teams .mtile__em{transition:none!important}
+}
 @media (max-width:900px){.home-page .mts{grid-template-columns:1fr}.home-page .mts__grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}.home-page .mtile{min-height:170px}}
 @media (max-width:520px){.home-page .mts__stage{height:170px}.home-page .mts__em{width:120px}.home-page .mtile{min-height:150px}.home-page .mtile__em{width:56px}.home-page .mtile__nm{font-size:13px}}
 @keyframes home-mtsCur{50%{border-color:var(--c-primary)}}
