@@ -37,7 +37,7 @@ const REASONS = [
 
 export const WhyProcomSection = () => {
   return (
-    <section id="why" className="shell section" aria-labelledby="why-title">
+    <section id="why" className="shell section" aria-labelledby="why-title" data-munch="flag" data-munch-label="Why attend">
       <header className="section-head" data-reveal>
         <h2 id="why-title" className="heading">Why be part of PROCOM?</h2>
         <p className="muted">Two ways in: compete, or build the thing everyone turns up for.</p>

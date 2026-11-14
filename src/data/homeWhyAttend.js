@@ -1,0 +1,58 @@
+// Stores the final-reference copy and destinations for Home's Why Attend section.
+export const homeWhyAttendContent = {
+  sectionLabel: '02 / Why attend',
+  title: 'Why attend',
+  titleHighlight: 'PROCOM?',
+  description: 'More ways to challenge yourself, meet people, and move forward.',
+  scoreLabel: 'Score',
+  score: '000000',
+  highScoreLabel: 'Hi',
+  highScore: '027027',
+  prompt: 'Pick a target · fire',
+  lockLabel: 'Lock on',
+  help: 'Click a target to blast it and open that page. Steer the ship with your mouse; press Space to fire while you’re over the field.',
+  targets: [
+    {
+      id: 'competitions',
+      href: '/competitions',
+      alien: 0,
+      number: '01',
+      icon: 'trophy',
+      title: 'Compete & Win',
+      description: 'Put your skills to the test and compete for recognition and prizes.',
+      cta: 'View competitions',
+    },
+    {
+      id: 'sponsors',
+      href: '/sponsors',
+      alien: 1,
+      number: '02',
+      icon: 'users',
+      title: 'Meet Industry People',
+      description: 'Connect with sponsors and professionals from across the industry.',
+      cta: 'View sponsors',
+    },
+    {
+      id: 'job-orbit',
+      href: '/job-orbit',
+      alien: 2,
+      number: '03',
+      icon: 'flag',
+      title: 'Find Job Opportunities',
+      description: 'Explore employers, career conversations, and opportunities through Job Orbit.',
+      cta: 'Explore Job Orbit',
+    },
+    {
+      id: 'workshops',
+      href: '/workshops',
+      alien: 3,
+      number: '04',
+      icon: 'ticket',
+      title: 'Learn & Network',
+      description: 'Build your knowledge through workshops, talks, and new connections.',
+      cta: 'View workshops',
+    },
+  ],
+};
+
+// /job-orbit and /workshops are placeholder routes until those pages exist.

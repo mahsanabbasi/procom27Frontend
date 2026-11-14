@@ -2,16 +2,15 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { Router, Switch, Route, useLocation } from 'wouter';
 import { Starfield } from './components/Starfield.jsx';
 import { Navbar } from './components/Navbar.jsx';
-import { HeroSection } from './components/HeroSection.jsx';
-import { AboutSection } from './components/AboutSection.jsx';
-import { CompetitionCategoriesSection } from './components/CompetitionCategoriesSection.jsx';
-import { WhyProcomSection } from './components/WhyProcomSection.jsx';
-import { MeetTheTeamsSection } from './components/MeetTheTeamsSection.jsx';
-import { IntroScheduleSection } from './components/IntroScheduleSection.jsx';
-import { RegisterBand } from './components/RegisterBand.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/modals/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
+import { ensureHomeFontsReady } from './components/home/homeFonts.js';
+import ComingSoonPage from './components/ComingSoonPage.jsx';
+
+import HomePage from './components/home/HomePage.jsx';
+
+ensureHomeFontsReady();
 
 const WhyAttendPage = lazy(() => import('./components/whyAttend/WhyAttendPage.jsx'));
 const AboutPage = lazy(() => import('./components/AboutPage.jsx'));
@@ -105,20 +104,6 @@ function RetroLoader() {
   );
 }
 
-function HomePage() {
-  return (
-    <>
-      <HeroSection />
-      <AboutSection />
-      <WhyProcomSection />
-      <CompetitionCategoriesSection />
-      <MeetTheTeamsSection />
-      <IntroScheduleSection />
-      <RegisterBand />
-    </>
-  );
-}
-
 function MainLayout() {
   const [location] = useLocation();
   const [contactOpen, setContactOpen] = useState(false);
@@ -126,6 +111,9 @@ function MainLayout() {
   const isWhyAttend = /^\/why-attend\/?$/.test(location);
   const PageContainer = isWhyAttend ? 'div' : 'main';
   const isAboutPage = location === '/about' || location === '/about/';
+  const isHomeRoute = location === '/';
+  // Home and Why Attend bring their own header/footer and background
+  const hideShell = isHomeRoute || isWhyAttend;
 
   useEffect(() => {
     if (isWhyAttend) {
@@ -168,34 +156,38 @@ function MainLayout() {
 
   return (
     <>
-      {!isWhyAttend && <Starfield />}
+      {!hideShell && <Starfield />}
 
       <div
         id={location !== '/' ? 'top' : undefined}
+        className={isHomeRoute ? 'app-home-route' : undefined}
         style={{
           position: 'relative',
           zIndex: 1,
           minHeight: '100svh',
           display: 'flex',
           flexDirection: 'column',
+          backgroundColor: isHomeRoute ? '#07060B' : undefined,
         }}
       >
-        {!isWhyAttend && <Navbar currentPath={location} />}
+        {!hideShell && <Navbar currentPath={location} />}
 
         <PageContainer style={{ flex: 1 }}>
           <ErrorBoundary>
             <Suspense fallback={<RetroLoader />}>
               <Switch>
-                <Route path="/" component={HomePage} />
+                <Route path="/">
+                  {() => <HomePage onContactClick={() => setContactOpen(true)} />}
+                </Route>
                 <Route path="/why-attend" component={WhyAttendPage} />
                 <Route path="/about" component={AboutPage} />
-                <Route component={HomePage} />
+                <Route component={ComingSoonPage} />
               </Switch>
             </Suspense>
           </ErrorBoundary>
         </PageContainer>
 
-        {!isWhyAttend && <Footer onContactClick={() => setContactOpen(true)} />}
+        {!hideShell && <Footer onContactClick={() => setContactOpen(true)} />}
       </div>
 
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />

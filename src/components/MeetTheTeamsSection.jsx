@@ -53,7 +53,7 @@ export const MeetTheTeamsSection = () => {
   const [emblaRef] = useEmblaCarousel({ loop: true, dragFree: true, align: 'start' }, plugins);
 
   return (
-    <section id="teams" className="section" aria-labelledby="teams-title">
+    <section id="teams" className="section" aria-labelledby="teams-title" data-munch="users" data-munch-label="Teams">
       <div className="shell">
         <header className="section-head section-head-row" data-reveal>
           <div>
